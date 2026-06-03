@@ -1,0 +1,13 @@
+{
+  "name": "GS02-Tirzha_skincare_ecommerce",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.0"
+  }
+}
