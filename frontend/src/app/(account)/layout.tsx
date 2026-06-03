@@ -1,1 +1,5 @@
-export default function AccountLayout({ children }) { return <section>{children}</section>; }
+import React from 'react';
+
+export default function AccountLayout({ children }: { children: React.ReactNode }) {
+  return <section>{children}</section>;
+}
