@@ -1,10 +1,9 @@
 import { ProductRepository } from '../../domain/ports/product.repository';
-import { Product, ProductType } from '@skincare/core';
 
 export class GetProductsByTypeUseCase {
   constructor(private productRepo: ProductRepository) {}
 
-  async execute(type: ProductType): Promise<Product[]> {
+  async execute(type: string) {
     return this.productRepo.findByType(type);
   }
 }
