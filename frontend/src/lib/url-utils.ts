@@ -16,12 +16,23 @@ export function slugify(text: string): string {
 
 export function getSubcategoriaUrl(categoria: string, subcategoria: string): string {
   const subSlug = slugify(subcategoria);
-  
   if (categoria === "productos") {
     return `/productos/tipo/${subSlug}`;
   }
   if (categoria === "tratamientos") {
-    return `/productos/solucion/${subSlug}`;
+    return `/tratamientos/${subSlug}`;
+  }
+  // Para informacion, mapear según corresponda
+  if (categoria === "informacion") {
+    const infoMap: Record<string, string> = {
+      "Rutinas": "/rutinas",
+      "Contacto": "/contacto",
+      "Preguntas Frecuentes": "/faq",
+      "Formas de Pago": "/formas-de-pago",
+      "Envíos y Devoluciones": "/envios-y-devoluciones",
+      "Tarjetas de Regalo": "/tarjetas-de-regalo",
+    };
+    return infoMap[subcategoria] || `/${subSlug}`;
   }
   return `/${subSlug}`;
 }

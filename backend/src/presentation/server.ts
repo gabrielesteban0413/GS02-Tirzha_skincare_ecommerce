@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', router);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
   console.log(`Backend listening on port ${PORT}`);
 });

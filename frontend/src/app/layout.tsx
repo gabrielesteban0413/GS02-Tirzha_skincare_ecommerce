@@ -3,6 +3,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+
+// layout.tsx
+// layout.tsx
+import { Montserrat } from "next/font/google";
+const titleFont = Montserrat({ weight: "700", subsets: ["latin"] });
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
