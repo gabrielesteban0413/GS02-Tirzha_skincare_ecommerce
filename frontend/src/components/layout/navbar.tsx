@@ -67,7 +67,9 @@ export function Navbar() {
                 className="object-contain"
               />
             </div>
-            <span className={`${titleFont.className} text-xl md:text-2xl font-bold tracking-tight text-gray-800`}>
+            <span className={`${titleFont.className} text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
+              isScrolled ? "text-gray-700" : "text-[#c05264]"
+            }`}>
               TIRZHA SKINCARE
             </span>
           </Link>
