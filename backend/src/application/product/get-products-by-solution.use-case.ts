@@ -2,7 +2,6 @@ import { validate } from 'class-validator';
 import { ProductRepository } from '../../domain/ports/product.repository';
 import { Product } from '../../domain/entities/product.entity';
 import { GetProductsBySolutionDto } from './dtos/get-products-by-solution.dto';
-import { ProductNotFoundError } from '../../domain/errors/product-not-found.error';
 
 export class GetProductsBySolutionUseCase {
   constructor(private productRepo: ProductRepository) {}
@@ -17,10 +16,7 @@ export class GetProductsBySolutionUseCase {
     // Execute use case logic
     const products = await this.productRepo.findBySolution(dto.solution);
 
-    if (!products || products.length === 0) {
-      throw new ProductNotFoundError(`solution:${dto.solution}`);
-    }
-
-    return products;
+    // Return empty array if no products found (not an error condition)
+    return products || [];
   }
 }

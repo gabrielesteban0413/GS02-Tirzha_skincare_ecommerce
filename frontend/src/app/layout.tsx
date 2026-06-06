@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+
 import { Montserrat } from 'next/font/google';
 import { LayoutClient } from './layout-client';
 
@@ -9,7 +10,7 @@ const titleFont = Montserrat({ weight: '700', subsets: ['latin'] });
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Vitamin Skincare',
+  title: 'Tirzha Skincare',
   description: 'Unlock your skin natural beauty',
 };
 

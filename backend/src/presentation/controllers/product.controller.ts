@@ -6,6 +6,7 @@ import { GetProductsByTypeDto } from '../../application/product/dtos/get-product
 import { GetProductsBySolutionDto } from '../../application/product/dtos/get-products-by-solution.dto';
 import { GetProductBySlugDto } from '../../application/product/dtos/get-product-by-slug.dto';
 import { DomainError } from '../../domain/errors/domain.error';
+import { ProductPresenterMapper } from '../mappers/product.presenter.mapper';
 
 export class ProductController {
   constructor(
@@ -20,7 +21,8 @@ export class ProductController {
       dto.type = String(req.params.type);
 
       const products = await this.getProductsByTypeUseCase.execute(dto);
-      res.json(products);
+      const responseDtos = ProductPresenterMapper.toResponseDtoArray(products);
+      res.json(responseDtos);
     } catch (error) {
       this.handleError(error, res);
     }
@@ -32,7 +34,8 @@ export class ProductController {
       dto.solution = String(req.params.solution);
 
       const products = await this.getProductsBySolutionUseCase.execute(dto);
-      res.json(products);
+      const responseDtos = ProductPresenterMapper.toResponseDtoArray(products);
+      res.json(responseDtos);
     } catch (error) {
       this.handleError(error, res);
     }
@@ -44,7 +47,8 @@ export class ProductController {
       dto.slug = String(req.params.slug);
 
       const product = await this.getProductBySlugUseCase.execute(dto);
-      res.json(product);
+      const responseDto = ProductPresenterMapper.toResponseDto(product);
+      res.json(responseDto);
     } catch (error) {
       this.handleError(error, res);
     }
