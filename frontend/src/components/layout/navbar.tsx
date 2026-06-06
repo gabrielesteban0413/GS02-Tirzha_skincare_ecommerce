@@ -10,7 +10,6 @@ import { getSubcategoriaUrl } from "@/lib/url-utils";
 
 const titleFont = Poppins({ weight: "700", subsets: ["latin"] });
 
-// Tipo para los items del menú
 type MenuItem =
   | { name: string; href: string; hasDropdown: false }
   | { name: string; hasDropdown: true; key: keyof typeof categorias };
@@ -63,7 +62,8 @@ export function Navbar() {
               <Image
                 src="/images/logo.png"
                 alt="Tirzha Skincare"
-                fill
+                width={40}
+                height={40}
                 className="object-contain"
               />
             </div>
@@ -162,7 +162,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-40 bg-white pt-20 px-4 transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
