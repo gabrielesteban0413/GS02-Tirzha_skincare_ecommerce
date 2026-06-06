@@ -1,8 +1,9 @@
 {
   "name": "@skincare/backend",
   "scripts": {
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "dev": "tsx watch src/presentation/server.ts",
-    "build": "tsc",
+    "build": "prisma generate --schema=./prisma/schema.prisma && tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {

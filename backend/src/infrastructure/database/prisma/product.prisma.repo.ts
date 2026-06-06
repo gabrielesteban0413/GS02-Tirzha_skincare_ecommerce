@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Product as PrismaProduct } from '@prisma/client';
 import { ProductRepository } from '../../../domain/ports/product.repository';
 import { Product } from '../../../domain/entities/product.entity';
 import { ProductMapper } from '../mappers/product.mapper';
@@ -13,7 +13,7 @@ export class ProductPrismaRepo implements ProductRepository {
         isActive: true,
       },
     });
-    return products.map((p) => ProductMapper.toDomain(p));
+    return products.map((p: PrismaProduct) => ProductMapper.toDomain(p));
   }
 
   async findBySolution(solution: string): Promise<Product[]> {
@@ -23,7 +23,7 @@ export class ProductPrismaRepo implements ProductRepository {
         isActive: true,
       },
     });
-    return products.map((p) => ProductMapper.toDomain(p));
+    return products.map((p: PrismaProduct) => ProductMapper.toDomain(p));
   }
 
   async findBySlug(slug: string): Promise<Product | null> {
