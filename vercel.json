@@ -1,6 +1,6 @@
 {
   "buildCommand": "turbo run build --filter=@skincare/frontend",
   "framework": "nextjs",
-  "outputDirectory": "frontend/.next",
+  "outputDirectory": ".next",
   "installCommand": "pnpm install"
 }
