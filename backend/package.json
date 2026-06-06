@@ -7,14 +7,22 @@
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
+    "@skincare/core": "workspace:*",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
     "cors": "^2.8.6",
     "express": "^4.18.0",
-    "prisma": "^5.0.0"
+    "prisma": "^5.0.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
   },
   "devDependencies": {
+    "@skincare/typescript-config": "workspace:*",
     "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",
-    "tsx": "^4.22.4"
+    "tsx": "^4.22.4",
+    "typescript": "^5.8.2"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

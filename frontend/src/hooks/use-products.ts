@@ -1,28 +1,41 @@
-import { useState, useEffect } from 'react';
-import { GetProductsByTypeUseCase } from '../application/product/get-products-by-type.use-case';
-import { GetProductsBySolutionUseCase } from '../application/product/get-products-by-solution.use-case';
+'use client';
 
-const typeUseCase = new GetProductsByTypeUseCase();
-const solutionUseCase = new GetProductsBySolutionUseCase();
+import { useQuery } from '@tanstack/react-query';
+import { productApi, Product } from '@/infrastructure/api/product.api';
 
 export function useProductsByType(type: string) {
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    typeUseCase.execute(type).then(setProducts).finally(() => setLoading(false));
-  }, [type]);
-
-  return { products, loading };
+  return useQuery({
+    queryKey: ['products', 'type', type],
+    queryFn: () => productApi.getByType(type),
+    staleTime: 5 * 60 * 1000, // 5 minutos
+    enabled: !!type, // Solo ejecutar si type existe
+  });
 }
 
 export function useProductsBySolution(solution: string) {
-  const [products, setProducts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  return useQuery({
+    queryKey: ['products', 'solution', solution],
+    queryFn: () => productApi.getBySolution(solution),
+    staleTime: 5 * 60 * 1000,
+    enabled: !!solution,
+  });
+}
 
-  useEffect(() => {
-    solutionUseCase.execute(solution).then(setProducts).finally(() => setLoading(false));
-  }, [solution]);
+export function useAllProducts(filters?: { type?: string; solution?: string }) {
+  return useQuery({
+    queryKey: ['products', filters],
+    queryFn: async () => {
+      let products: Product[] = [];
 
-  return { products, loading };
+      if (filters?.type) {
+        products = await productApi.getByType(filters.type);
+      } else if (filters?.solution) {
+        products = await productApi.getBySolution(filters.solution);
+      }
+
+      return products;
+    },
+    staleTime: 5 * 60 * 1000,
+    enabled: !!(filters?.type || filters?.solution),
+  });
 }

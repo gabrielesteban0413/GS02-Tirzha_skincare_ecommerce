@@ -1,15 +1,25 @@
-import { useState, useEffect } from 'react';
-import { GetProductBySlugUseCase } from '../application/product/get-product-by-slug.use-case';
+'use client';
 
-const useCase = new GetProductBySlugUseCase();
+import { useQuery } from '@tanstack/react-query';
+import { productApi, Product } from '@/infrastructure/api/product.api';
 
 export function useProduct(slug: string) {
-  const [product, setProduct] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
+  return useQuery({
+    queryKey: ['products', 'slug', slug],
+    queryFn: () => productApi.getBySlug(slug),
+    staleTime: 10 * 60 * 1000, // 10 minutos
+    enabled: !!slug,
+  });
+}
 
-  useEffect(() => {
-    useCase.execute(slug).then(setProduct).finally(() => setLoading(false));
-  }, [slug]);
-
-  return { product, loading };
+export function useProductById(id: string) {
+  return useQuery({
+    queryKey: ['products', 'id', id],
+    queryFn: async () => {
+      // Nota: Necesitarías agregar un método en productApi.getById(id)
+      // Por ahora, lanzamos un error
+      throw new Error('useProductById no está implementado en el API');
+    },
+    enabled: !!id,
+  });
 }

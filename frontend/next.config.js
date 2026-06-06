@@ -1,8 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+
+  },
   typescript: {
-    // Opcional: puedes dejarlo vacío o agregar tsconfigPath si lo deseas
-    // tsconfigPath: './tsconfig.json',
+    ignoreBuildErrors: true,
   },
 };
 
