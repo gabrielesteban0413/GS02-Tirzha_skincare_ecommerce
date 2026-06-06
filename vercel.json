@@ -1,0 +1,6 @@
+{
+  "buildCommand": "turbo run build --filter=@skincare/frontend",
+  "outputDirectory": "frontend/.next",
+  "framework": "nextjs",
+  "root": "frontend"
+}
