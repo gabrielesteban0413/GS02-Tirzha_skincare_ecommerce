@@ -9,7 +9,7 @@ import { HERO_CONTENT, OFFER_CONTENT } from "@/data/home.content"; // te explico
 
 export default function Home() {
   const router = useRouter();
-  const { products, loading } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading: loading } = useProductsByType("hidratantes");
   const featuredProducts = products.slice(0, 6);
 
   const handleShopNow = () => router.push("/productos");

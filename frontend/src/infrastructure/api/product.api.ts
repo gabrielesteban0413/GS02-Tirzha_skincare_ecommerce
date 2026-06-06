@@ -1,19 +1,45 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+import { ApiClient } from './base-api';
 
-export const productApi = {
-  getByType: async (type: string) => {
-    const res = await fetch(`${API_URL}/products/type/${type}`);
-    if (!res.ok) throw new Error('Error fetching products');
-    return res.json();
-  },
-  getBySolution: async (solution: string) => {
-    const res = await fetch(`${API_URL}/products/solution/${solution}`);
-    if (!res.ok) throw new Error('Error fetching products');
-    return res.json();
-  },
-  getBySlug: async (slug: string) => {
-    const res = await fetch(`${API_URL}/products/${slug}`);
-    if (!res.ok) throw new Error('Product not found');
-    return res.json();
-  },
-};
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  stock: number;
+  description: string;
+  type: string;
+  solution: string;
+  imageUrl: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+class ProductApi extends ApiClient {
+  async getByType(type: string): Promise<Product[]> {
+    const client = this.getClient();
+    return client.get(`/products/type/${type}`);
+  }
+
+  async getBySolution(solution: string): Promise<Product[]> {
+    const client = this.getClient();
+    return client.get(`/products/solution/${solution}`);
+  }
+
+  async getBySlug(slug: string): Promise<Product> {
+    const client = this.getClient();
+    return client.get(`/products/slug/${slug}`);
+  }
+
+  async search(query: string): Promise<Product[]> {
+    const client = this.getClient();
+    return client.get('/products/search', { params: { q: query } });
+  }
+
+  async getCategory(category: string): Promise<Product[]> {
+    const client = this.getClient();
+    return client.get(`/products/category/${category}`);
+  }
+}
+
+export const productApi = new ProductApi();

@@ -1,1 +1,1 @@
-export default function RoutineDetail({ params }) { return <div>Routine: {params.slug}</div>; }
+export default function RoutineDetail({ params }: { params: { slug: string } }) { return <div>Routine: {params.slug}</div>; }

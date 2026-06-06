@@ -4,7 +4,7 @@ import { useProductsByType } from '@/hooks/use-products';
 import { ProductCard } from '@/components/product/ProductCard';
 
 export default function ProductTypePage({ params }: { params: { type: string } }) {
-  const { products, loading } = useProductsByType(params.type);
+  const { data: products = [], isLoading: loading } = useProductsByType(params.type);
 
   return (
     <div className="max-w-7xl mx-auto p-8">

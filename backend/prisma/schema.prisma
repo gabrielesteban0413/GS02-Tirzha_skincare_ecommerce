@@ -13,9 +13,11 @@ model Product {
   slug        String   @unique
   description String
   price       Float
+  stock       Int      @default(0)
   imageUrl    String
   type        String
   solution    String
+  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

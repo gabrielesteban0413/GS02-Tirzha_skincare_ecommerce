@@ -8,5 +8,5 @@ allowBuilds:
   '@prisma/engines': false
   esbuild: false
   prisma: false
-
-
+overrides:
+  typescript-config: link:../packages/config/typescript-config

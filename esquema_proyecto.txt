@@ -13,6 +13,7 @@ Ruta: C:\Users\Sanch\Downloads\REPO\GS02-Tirzha_skincare_ecommerce
 │   ├── {} tsconfig.json
 │   ├── 📁 prisma/
 │   │   ├── 🗄️ schema.prisma
+│   │   ├──  seed.js
 │   │   ├──  seed.ts
 │   ├── 📁 src/
 │   │   ├── 📁 application/
@@ -94,6 +95,7 @@ Ruta: C:\Users\Sanch\Downloads\REPO\GS02-Tirzha_skincare_ecommerce
 │   │   │   │   ├── 📄 hero-product.png
 │   │   │   │   ├── 📄 offer-bg.jpg
 │   │   │   │   ├── 📄 streetwear-accessories.jpg
+│   │   │   │   ├── 📄 streetwear-lookbook - etc.jpg
 │   │   │   │   ├── 📄 streetwear-lookbook.jpg
 │   │   │   │   ├── 📄 streetwear-main.jpg
 │   │   │   │   ├── 📄 streetwear-pants.jpg
@@ -187,12 +189,15 @@ Ruta: C:\Users\Sanch\Downloads\REPO\GS02-Tirzha_skincare_ecommerce
 │   │   │   ├── 📁 ui/
 │   │   │   │   ├── ⚛️ button.tsx
 │   │   │   │   ├── ⚛️ product-card.tsx
+│   │   ├── 📁 constants/
 │   │   ├── 📁 data/
 │   │   │   ├──  categories.ts
+│   │   │   ├──  home.content.ts
 │   │   ├── 📁 hooks/
 │   │   │   ├──  use-auth.ts
 │   │   │   ├──  use-cart.ts
 │   │   │   ├──  use-navbar.ts
+│   │   │   ├──  use-navigation.ts
 │   │   │   ├──  use-product.ts
 │   │   │   ├──  use-products.ts
 │   │   ├── 📁 infrastructure/
@@ -242,6 +247,9 @@ Ruta: C:\Users\Sanch\Downloads\REPO\GS02-Tirzha_skincare_ecommerce
 │   │   ├── {} package.json
 │   │   ├── 📁 src/
 │   │   │   ├──  index.ts
+│   ├── 📁 typescript-config/
+│   │   ├── {} base.json
+│   │   ├── {} package.json
 │   ├── 📁 ui-kit/
 │   │   ├── {} package.json
 │   │   ├── 📁 src/

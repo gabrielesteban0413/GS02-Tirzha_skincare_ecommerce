@@ -4,7 +4,7 @@ import { useProductsBySolution } from '@/hooks/use-products';
 import { ProductCard } from '@/components/product/ProductCard';
 
 export default function SolutionPage({ params }: { params: { solution: string } }) {
-  const { products, loading } = useProductsBySolution(params.solution);
+  const { data: products = [], isLoading: loading } = useProductsBySolution(params.solution);
 
   return (
     <div className="max-w-7xl mx-auto p-8">
