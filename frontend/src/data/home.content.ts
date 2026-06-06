@@ -10,7 +10,7 @@ export const HERO_CONTENT = {
 };
 
 export const OFFER_CONTENT = {
-  title: "What we offer",
+  title: "serums que transforman tu piel",
   subtitle: "Our Serums Offer You Not Just Skincare, But An Experience.",
   cta: "Explore More →",
 };

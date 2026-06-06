@@ -1,5 +1,9 @@
 # Tirzha Skincare Ecommerce
 
+
+image= 
+
+
 Advanced ecommerce platform for skincare products built with modern architecture principles and enterprise-grade technologies.
 
 ## Table of Contents

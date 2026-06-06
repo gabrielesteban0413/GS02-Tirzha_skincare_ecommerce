@@ -7,6 +7,9 @@ import Image from "next/image";
 import { useProductsByType } from "@/hooks/use-products";
 import { HERO_CONTENT, OFFER_CONTENT } from "@/data/home.content"; // te explico después
 
+import { VitaminSection } from "@/components/home/VitaminSection";
+
+
 export default function Home() {
   const router = useRouter();
   const { data: products = [], isLoading: loading } = useProductsByType("hidratantes");
@@ -98,6 +101,10 @@ export default function Home() {
       </div>
 
       {/* Featured Products (desde el backend) */}
+
+      <VitaminSection />
+
+
       <section className="py-12 md:py-20 px-4 md:px-8 lg:px-16 bg-[#fef7f2]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 md:mb-12">
