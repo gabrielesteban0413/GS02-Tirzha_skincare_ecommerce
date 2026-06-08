@@ -2,87 +2,96 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion"; // Recuerda instalar: pnpm add framer-motion
+import { useRouter } from "next/navigation";
 
 interface HeroSectionProps {
-  onShopNow: () => void;
-  onLearnMore: () => void;
+  badge: string;
+  title: string;
+  highlight: string;
+  description: string;
+  priceLabel: string;
+  price: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
 }
 
-export function HeroSection({ onShopNow, onLearnMore }: HeroSectionProps) {
+export function HeroSection({
+  badge,
+  title,
+  highlight,
+  description,
+  priceLabel,
+  price,
+  ctaPrimary,
+  ctaSecondary,
+}: HeroSectionProps) {
+  const router = useRouter();
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Imagen de Fondo con Parallax */}
+    <section className="relative min-h-screen flex items-center px-4 md:px-8 lg:px-16 pt-16 overflow-hidden">
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/home/hero-bg.jpg"
+          src="/images/home/hero-bg.webp"
           alt="Hero background"
           fill
-          className="object-cover scale-105"
+          className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent" />
       </div>
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-white/70 via-white/50 to-transparent" />
 
-      {/* Contenido Principal */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 lg:px-16 w-full py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Texto Animado */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            <span className="text-sm font-semibold text-amber-600 tracking-wider bg-amber-100/50 backdrop-blur-sm px-3 py-1 rounded-full inline-block w-fit">
-              01 — New Collection
-            </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight">
-              Unlock Your
-              <span className="block text-amber-600 mt-2">Skin's Natural Beauty</span>
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          {/* Left Content */}
+          <div className="space-y-4 md:space-y-6">
+            <span className="text-sm font-medium text-rose-400/80 tracking-wider">{badge}</span>
+
+            <h1 className="font-['Cormorant_Garamond'] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light leading-tight tracking-tight">
+              <span className="text-gray-800">{title}</span>
+              <span className="block font-semibold mt-2 md:mt-3 text-[#c05264]">{highlight}</span>
             </h1>
-            <p className="text-gray-600 leading-relaxed max-w-md text-lg">
-              Welcome to the world of vitamin skincare, where we believe that beauty starts with
-              healthy, radiant skin.
-            </p>
-            <div className="flex items-center gap-6 pt-4">
-              <div>
-                <span className="text-sm text-gray-500 block">Starting at</span>
-                <span className="text-4xl font-bold text-gray-900">$39.99</span>
-              </div>
+
+            <p className="text-gray-500 leading-relaxed max-w-md text-sm md:text-base">{description}</p>
+
+            {/* Price */}
+            <div className="flex items-center gap-4 pt-2 md:pt-4">
+              <span className="text-gray-400 text-sm md:text-base">{priceLabel}</span>
+              <span className="text-2xl md:text-3xl font-semibold text-[#c05264]">{price}</span>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-3 md:gap-4 pt-2 md:pt-4">
               <button
-                onClick={onShopNow}
-                className="bg-black text-white hover:bg-gray-800 rounded-full px-8 py-3 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                onClick={() => router.push("/productos")}
+                className="bg-[#c05264] text-white hover:bg-[#a84354] rounded-full px-6 md:px-8 py-2 md:py-3 text-sm md:text-base transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
               >
-                Shop Now
+                {ctaPrimary}
               </button>
               <button
-                onClick={onLearnMore}
-                className="border border-gray-300 hover:border-amber-500 rounded-full px-8 py-3 transition-all hover:bg-amber-50"
+                onClick={() => router.push("/about")}
+                className="border border-[#c05264]/30 text-[#c05264] hover:bg-[#c05264]/10 rounded-full px-6 md:px-8 py-2 md:py-3 text-sm md:text-base transition-all duration-300"
               >
-                Learn More →
+                {ctaSecondary}
               </button>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Imagen del Producto con Efecto de Sombra y Brillo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative flex justify-center"
-          >
-            <div className="relative w-[320px] h-[320px] md:w-[450px] md:h-[450px]">
-              <div className="absolute inset-0 bg-gradient-to-tr from-amber-200 to-amber-400 rounded-full blur-3xl opacity-30 animate-pulse" />
+          {/* Right Image */}
+          <div className="relative flex justify-center items-center">
+            <div className="relative w-full max-w-[280px] sm:max-w-[350px] md:max-w-[500px] lg:max-w-[650px] aspect-square mx-auto">
               <Image
-                src="/images/home/hero-product.png"
+                src="/images/home/hero-product.webp"
                 alt="Hero Product"
                 fill
                 className="object-contain drop-shadow-2xl"
                 priority
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 500px, 650px"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
