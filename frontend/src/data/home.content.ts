@@ -70,9 +70,9 @@ export const FOOTER_CONTENT = {
       title: "Compras",
       links: [
         { label: "Productos", href: "/productos" },
-        { label: "Categorías", href: "/productos" },
-        { label: "Ofertas", href: "/productos" },
-        { label: "Nuevos", href: "/productos" },
+        { label: "Categorías", href: "/Categorías" },
+        { label: "Ofertas", href: "/Ofertas" },
+        { label: "Nuevos", href: "/Nuevos" },
       ],
     },
     {
