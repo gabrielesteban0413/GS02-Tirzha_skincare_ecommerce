@@ -29,7 +29,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
   };
 
   return (
-    <section className="vitamin-section py-10 md:py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)] overflow-x-hidden">
+    <section className="vitamin-section relative isolate py-10 md:py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)] overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-10 gap-4 animate-fade-in-up">
@@ -52,9 +52,9 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           {hero && (
             <div
               onClick={() => router.push(`/productos/categoria/${hero.slug}`)}
-              className="lg:row-span-2 rounded-2xl overflow-hidden cursor-pointer group bg-white/70 backdrop-blur-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-[#c05264]/20 hover:-translate-y-2 will-change-transform"
+              className="relative lg:row-span-2 rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,244,247,0.98))] shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-[#c05264]/20 hover:-translate-y-2 will-change-transform"
             >
-              <div className="relative aspect-[4/3] sm:aspect-[3/4] w-full bg-gradient-to-br from-[#fdf0f2] to-[#fce8d5] overflow-hidden">
+              <div className="relative aspect-[4/3] sm:aspect-[3/4] w-full bg-[linear-gradient(135deg,#fff6f7_0%,#fff1e8_45%,#f4efff_100%)] overflow-hidden">
                 <Image
                   src={getCategoryImage(hero.slug)}
                   alt={hero.name}
@@ -97,9 +97,9 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
             <div
               key={category.id}
               onClick={() => router.push(`/productos/categoria/${category.slug}`)}
-              className="rounded-2xl overflow-hidden cursor-pointer group bg-white/70 backdrop-blur-sm transition-all duration-400 ease-out hover:shadow-xl hover:-translate-y-1 will-change-transform"
+              className="relative rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,245,247,0.98))] shadow-sm transition-all duration-400 ease-out hover:shadow-xl hover:-translate-y-1 will-change-transform"
             >
-              <div className="relative aspect-[4/3] bg-[#fef9f6] overflow-hidden">
+              <div className="relative aspect-[4/3] bg-[linear-gradient(135deg,#fff6f7_0%,#fff1e8_50%,#f5f0ff_100%)] overflow-hidden">
                 <Image
                   src={getCategoryImage(category.slug)}
                   alt={category.name}
@@ -139,7 +139,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
             <div
               key={category.id}
               onClick={() => router.push(`/productos/categoria/${category.slug}`)}
-              className="rounded-2xl flex items-center gap-3 p-3 cursor-pointer group bg-white/70 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md border border-white/50 will-change-transform"
+              className="relative rounded-2xl flex items-center gap-3 p-3 cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(255,245,247,0.96))] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md border border-white/60 will-change-transform"
             >
               <div className="w-12 h-12 rounded-xl bg-[#fdf0f2] flex items-center justify-center flex-shrink-0 relative overflow-hidden">
                 <Image
