@@ -4,7 +4,7 @@
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "dev": "tsx watch src/presentation/server.ts",
     "build": "prisma generate --schema=./prisma/schema.prisma && tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/presentation/server.js"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
