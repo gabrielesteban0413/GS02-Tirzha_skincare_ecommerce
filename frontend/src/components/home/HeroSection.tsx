@@ -28,21 +28,16 @@ export function HeroSection({
   const router = useRouter();
 
   return (
-    <section className="relative min-h-screen flex items-center px-4 md:px-8 lg:px-16 pt-16 overflow-hidden">
-      {/* Fondo independiente con prioridad más baja */}
-      <div
-        className="absolute inset-0 -z-20"
-        style={{
-          backgroundImage: "url('/images/home/hero-bg.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-
-      {/* Gradiente overlay */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-white/70 via-white/50 to-transparent" />
-
+    <section
+      className="relative isolate min-h-screen flex items-center px-4 md:px-8 lg:px-16 pt-16 overflow-hidden bg-[#fff8f5]"
+      style={{
+        backgroundImage:
+          'linear-gradient(110deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.15) 100%), url("/images/home/hero-bg.webp")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       {/* Contenido */}
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -86,7 +81,7 @@ export function HeroSection({
             </div>
           </div>
 
-          {/* Right Image - Aseguramos que no se desborde */}
+          {/* Right Image */}
           <div className="relative flex justify-center items-center">
             <div className="relative w-full max-w-[280px] sm:max-w-[350px] md:max-w-[500px] lg:max-w-[650px] aspect-square mx-auto z-10">
               <Image

@@ -1,10 +1,11 @@
 // frontend/src/components/home/FavoritesSection.tsx
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, type MouseEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useProductsByType } from "@/hooks/use-products";
+import { useAddToCart } from "@/hooks/use-cart";
 
 interface FavoritesSectionProps {
   title: string;
@@ -14,6 +15,7 @@ interface FavoritesSectionProps {
 export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
   const router = useRouter();
   const { data: products = [], isLoading } = useProductsByType("hidratantes");
+  const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -45,9 +47,25 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
     "#fbf0e4", "#e4f5ec", "#fef3e6", "#fbeaf0",
   ];
 
+  const handleAddToCart = (
+    event: MouseEvent<HTMLButtonElement>,
+    product: { id: string; name: string; price: number }
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    addToCart({
+      productId: product.id,
+      productName: product.name,
+      quantity: 1,
+      unitPrice: Number(product.price) || 0,
+      subtotal: Number(product.price) || 0,
+    });
+  };
+
   if (isLoading) {
     return (
-      <section className="py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
+      <section className="relative isolate py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
         <div className="flex justify-center">
           <div className="w-8 h-8 border-4 border-[#c05264] border-t-transparent rounded-full animate-spin" />
         </div>
@@ -57,11 +75,12 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
 
   if (!products.length) return null;
 
-  const CARD_W = 226; // 210px card + 16px gap
+  const CARD_W = 226;
 
   return (
-    <section className="py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
+    <section className="relative isolate py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
+
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#c05264] font-medium mb-3">
@@ -74,13 +93,14 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
           <p className="text-gray-500 text-sm md:text-base">{subtitle}</p>
         </div>
 
-        {/* Carousel Controls & Track */}
+        {/* Carousel */}
         <div className="space-y-8">
-          {/* Navigation */}
-          <div className="hidden md:flex gap-2 justify-center">
+
+          {/* Navigation arrows */}
+          <div className="hidden md:flex gap-2 justify-end pr-1">
             <button
               onClick={() => goTo(current - 1)}
-              className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all"
+              className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all duration-300"
               aria-label="Anterior"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +109,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
             </button>
             <button
               onClick={() => goTo(current + 1)}
-              className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all"
+              className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all duration-300"
               aria-label="Siguiente"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +119,11 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
           </div>
 
           {/* Track */}
-          <div className="overflow-hidden" onMouseEnter={stopAuto} onMouseLeave={startAuto}>
+          <div
+            className="overflow-hidden"
+            onMouseEnter={stopAuto}
+            onMouseLeave={startAuto}
+          >
             <div
               ref={trackRef}
               className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
@@ -109,20 +133,21 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                 <div
                   key={product.id}
                   onClick={() => router.push(`/productos/${product.slug}`)}
-                  className="flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
+                  className="relative flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
                   style={{ background: bgColors[i % bgColors.length] }}
                 >
-                  {/* Image area */}
+                  {/* Image */}
                   <div className="relative w-full h-[240px] overflow-hidden">
                     {product.imageUrl ? (
                       <Image
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="210px"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
+                      <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-14 h-14 rounded-full border border-[#c05264]/40 flex items-center justify-center">
                           <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#c05264] opacity-70">
                             {product.name[0]}
@@ -144,7 +169,9 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                       <span className="text-lg font-medium text-[#c05264]">${product.price}</span>
                       <button
                         aria-label="Agregar al carrito"
-                        className="w-8 h-8 rounded-full bg-[#c05264] flex items-center justify-center hover:bg-[#a84354] transition-all duration-300 hover:scale-110 hover:shadow-lg will-change-transform"
+                        onClick={(e) => handleAddToCart(e, product)}
+                        disabled={isAddingToCart}
+                        className="w-8 h-8 rounded-full bg-[#c05264] flex items-center justify-center hover:bg-[#a84354] transition-all duration-300 hover:scale-110 will-change-transform disabled:cursor-not-allowed disabled:opacity-70"
                       >
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -157,9 +184,9 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
             </div>
           </div>
 
-          {/* Indicators */}
+          {/* Dots */}
           <div className="flex justify-center gap-2">
-            {Array.from({ length: total - VISIBLE + 1 }).map((_, i) => (
+            {Array.from({ length: Math.max(0, total - VISIBLE + 1) }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
@@ -181,6 +208,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
             Ver Todos los Productos
           </button>
         </div>
+
       </div>
     </section>
   );

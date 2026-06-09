@@ -1,9 +1,10 @@
 packages:
-  - 'apps/*'
   - 'frontend'
   - 'backend'
   - 'packages/**'
+
 allowBuilds:
-  '@prisma/client': set this to true or false
+  - '@prisma/client'
+
 overrides:
   typescript-config: link:../packages/config/typescript-config

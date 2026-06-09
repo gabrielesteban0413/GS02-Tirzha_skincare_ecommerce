@@ -26,7 +26,7 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
   }
 
   return (
-    <section className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-[#fef7f2]">
+    <section className="relative isolate py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-[#fef7f2] overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -47,18 +47,18 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
               <div
                 key={product.id}
                 onClick={() => router.push(`/productos/${product.slug}`)}
-                className="group cursor-pointer"
+                className="group cursor-pointer relative isolate"
               >
                 <div className="text-center space-y-2">
                   {/* Image */}
-                  <div className="aspect-square bg-gradient-to-br from-[#fdf0f2] to-[#fce8d5] rounded-lg overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <div className="relative isolate aspect-square bg-gradient-to-br from-[#fdf0f2] to-[#fce8d5] rounded-lg overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     {product.imageUrl ? (
                       <Image
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 50vw, 16vw"
+                        className="object-cover object-center"
+                        sizes="210px"
                       />
                     ) : (
                       <span className="text-2xl">V</span>
