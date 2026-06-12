@@ -9,8 +9,5 @@
   },
   "devDependencies": {
     "turbo": "^1.10.0"
-  },
-  "dependencies": {
-    "typescript-config": "link:../packages/config/typescript-config"
   }
 }
