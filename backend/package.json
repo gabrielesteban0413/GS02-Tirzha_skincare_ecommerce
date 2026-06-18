@@ -3,8 +3,8 @@
   "scripts": {
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "dev": "prisma generate --schema=./prisma/schema.prisma && tsx watch src/presentation/server.ts",
-    "build": "prisma generate --schema=./prisma/schema.prisma && tsc",
-    "prestart": "prisma generate --schema=./prisma/schema.prisma",
+    "build": "pnpm --filter @skincare/core build && prisma generate --schema=./prisma/schema.prisma && tsc",
+    "prestart": "pnpm --filter @skincare/core build && prisma generate --schema=./prisma/schema.prisma",
     "start": "node dist/presentation/server.js"
   },
   "dependencies": {
