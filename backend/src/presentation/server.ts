@@ -3,11 +3,26 @@ import cors from 'cors';
 import router from './routes';
 
 const app = express();
-app.use(cors());
+
+const corsOrigins = process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()).filter(Boolean);
+
+app.use(
+  cors(
+    corsOrigins && corsOrigins.length > 0
+      ? {
+          origin: corsOrigins,
+        }
+      : undefined,
+  ),
+);
 app.use(express.json());
 app.use('/api', router);
 
-const PORT = process.env.PORT || 3003;
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
+
+const PORT = Number(process.env.PORT) || 3001;
 app.listen(PORT, () => {
   console.log(`Backend listening on port ${PORT}`);
 });

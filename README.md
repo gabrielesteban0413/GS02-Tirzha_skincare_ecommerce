@@ -230,7 +230,7 @@ cp frontend/.env.example frontend/.env.local
 DATABASE_URL=postgresql://user:password@localhost:5432/tirzha_db
 NODE_ENV=development
 PORT=3001
-JWT_SECRET=your-secret-key
+CORS_ORIGIN=http://localhost:3000,https://tirzha-skincare.vercel.app
 ```
 
 **Frontend** (`frontend/.env.local`):
@@ -427,9 +427,10 @@ Netlify historically has issues with Next.js SSR. The 404 error occurs because:
 ```
 
 **Backend on Railway/Render:**
-- Push backend to separate repository
-- Deploy to Railway (https://railway.app) or Render (https://render.com)
-- Configure frontend API URL to point to backend
+- Deploy the backend from the `backend/` folder
+- Use Railway (https://railway.app) or Render (https://render.com)
+- Set `DATABASE_URL`, `NODE_ENV=production`, `PORT=3001`, and `CORS_ORIGIN=https://tirzha-skincare.vercel.app`
+- Run Prisma migrations and the initial seed once after the first deploy
 
 ### Option 4: Docker Deployment
 
