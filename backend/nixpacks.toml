@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["npm install -g pnpm@9.15.9", "cd .. && pnpm install --frozen-lockfile"]
+
+[phases.build]
+cmds = ["cd .. && pnpm --filter @skincare/backend build"]
+
+[start]
+cmd = "cd .. && pnpm --filter @skincare/backend start"

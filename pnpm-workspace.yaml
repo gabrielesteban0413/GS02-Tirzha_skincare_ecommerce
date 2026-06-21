@@ -4,7 +4,8 @@ packages:
   - 'packages/**'
 
 allowBuilds:
-  - '@prisma/client'
-
-overrides:
-  typescript-config: link:../packages/config/typescript-config
+  '0': '@prisma/client'
+  '@prisma/client': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true

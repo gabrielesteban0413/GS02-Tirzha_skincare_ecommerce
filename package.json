@@ -1,6 +1,7 @@
 {
   "name": "GS02-Tirzha_skincare_ecommerce",
   "private": true,
+  "packageManager": "pnpm@11.5.1",
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
@@ -9,8 +10,5 @@
   },
   "devDependencies": {
     "turbo": "^1.10.0"
-  },
-  "dependencies": {
-    "typescript-config": "link:../packages/config/typescript-config"
   }
 }

@@ -81,8 +81,16 @@ El backend se necesita desplegar por separado.
 # 6. Variables de entorno en Railway:
 DATABASE_URL = postgresql://...
 NODE_ENV = production
-JWT_SECRET = [generar clave segura]
 ```
+CORS_ORIGIN = https://tirzha-skincare.vercel.app
+
+# 6. Comandos de despliegue:
+# Build command: pnpm install && pnpm build
+# Start command: pnpm start
+
+# 7. Migrar la base de datos y cargar datos iniciales
+# La primera vez que se despliegue la base de datos, ejecutar la seed manualmente:
+# pnpm exec prisma db seed
 
 **Opción B: Render (Alternativa)**
 
@@ -534,6 +542,15 @@ En Railway, agregar variable:
 ```
 DATABASE_URL=postgresql://...
 ```
+
+### Error: La API responde pero no hay productos
+
+**Solución:**
+La base ya existe, pero falta cargar datos iniciales. Ejecuta una sola vez:
+```bash
+pnpm exec prisma db seed
+```
+Esto usa el archivo `backend/prisma/seed.ts` y crea los productos iniciales.
 
 ### Error: "NEXT_PUBLIC_API_URL is not defined"
 
