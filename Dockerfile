@@ -11,7 +11,6 @@ FROM base AS deps
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY backend ./backend
-COPY frontend ./frontend
 COPY packages ./packages
 
 RUN pnpm install --frozen-lockfile
@@ -30,11 +29,15 @@ COPY --from=deps /app/package.json ./package.json
 COPY --from=deps /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=deps /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=deps /app/backend ./backend
-COPY --from=deps /app/frontend ./frontend
 COPY --from=deps /app/packages ./packages
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/backend/dist ./backend/dist
 
+COPY --from=deps /app/backend/prisma ./backend/prisma
+
 WORKDIR /app/backend
 
-CMD ["node", "dist/presentation/server.js"]
+EXPOSE 3001
+
+# Ajusta según tu punto de entrada real (server.js o presentation/server.js)
+CMD ["node", "dist/server.js"]
