@@ -39,5 +39,4 @@ WORKDIR /app/backend
 
 EXPOSE 3001
 
-# Ajusta según tu punto de entrada real (server.js o presentation/server.js)
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/presentation/server.js"]
