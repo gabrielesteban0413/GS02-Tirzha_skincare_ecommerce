@@ -39,4 +39,4 @@ WORKDIR /app/backend
 
 EXPOSE 3001
 
-CMD ["node", "dist/presentation/server.js"]
+CMD ["sh", "-c", "pnpm --dir /app/backend exec prisma migrate deploy --schema=./prisma/schema.prisma && node /app/backend/dist/presentation/server.js"]
