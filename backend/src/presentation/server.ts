@@ -8,19 +8,32 @@ const app = express();
 const corsOrigin = process.env.CORS_ORIGIN;
 console.log('CORS_ORIGIN env:', corsOrigin);
 
+const normalizeOrigin = (origin: string) => {
+  const trimmed = origin.trim();
+  if (trimmed === '*') return '*';
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  if (trimmed === 'localhost' || trimmed.startsWith('localhost:')) {
+    return `http://${trimmed}`;
+  }
+  return `https://${trimmed}`;
+};
+
 let corsOptions: cors.CorsOptions | undefined;
 
 if (corsOrigin === '*') {
-  // Si es '*', permitir todos los orígenes
   corsOptions = { origin: '*' };
 } else if (corsOrigin) {
-  // Si hay una lista separada por comas, procesarla
-  const origins = corsOrigin.split(',').map((o) => o.trim()).filter(Boolean);
+  const origins = corsOrigin
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean)
+    .map(normalizeOrigin);
   if (origins.length > 0) {
     corsOptions = { origin: origins };
   }
 }
 
+console.log('CORS origins allowed:', corsOptions?.origin);
 app.use(cors(corsOptions));
 
 app.use(express.json());
