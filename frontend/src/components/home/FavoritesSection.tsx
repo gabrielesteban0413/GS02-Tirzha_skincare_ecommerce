@@ -14,7 +14,7 @@ interface FavoritesSectionProps {
 
 export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
   const router = useRouter();
-  const { data: products = [], isLoading } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
   const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
@@ -73,8 +73,6 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
     );
   }
 
-  if (!products.length) return null;
-
   const CARD_W = 226;
 
   return (
@@ -118,73 +116,83 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
             </button>
           </div>
 
-          {/* Track */}
-          <div
-            className="overflow-hidden"
-            onMouseEnter={stopAuto}
-            onMouseLeave={startAuto}
-          >
+          {featured.length > 0 && (
             <div
-              ref={trackRef}
-              className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-              style={{ transform: `translateX(-${current * CARD_W}px)` }}
+              className="overflow-hidden"
+              onMouseEnter={stopAuto}
+              onMouseLeave={startAuto}
             >
-              {featured.map((product, i) => (
-                <div
-                  key={product.id}
-                  onClick={() => router.push(`/productos/${product.slug}`)}
-                  className="relative flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
-                  style={{ background: bgColors[i % bgColors.length] }}
-                >
-                  {/* Image */}
-                  <div className="relative w-full h-[240px] overflow-hidden">
-                    {product.imageUrl ? (
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name}
-                        fill
-                        sizes="210px"
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-14 h-14 rounded-full border border-[#c05264]/40 flex items-center justify-center">
-                          <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#c05264] opacity-70">
-                            {product.name[0]}
-                          </span>
+              <div
+                ref={trackRef}
+                className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+                style={{ transform: `translateX(-${current * CARD_W}px)` }}
+              >
+                {featured.map((product, i) => (
+                  <div
+                    key={product.id}
+                    onClick={() => router.push(`/productos/${product.slug}`)}
+                    className="relative flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
+                    style={{ background: bgColors[i % bgColors.length] }}
+                  >
+                    {/* Image */}
+                    <div className="relative w-full h-[240px] overflow-hidden">
+                      {product.imageUrl ? (
+                        <Image
+                          src={product.imageUrl}
+                          alt={product.name}
+                          fill
+                          sizes="210px"
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-14 h-14 rounded-full border border-[#c05264]/40 flex items-center justify-center">
+                            <span className="font-['Cormorant_Garamond'] text-2xl font-light text-[#c05264] opacity-70">
+                              {product.name[0]}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
 
-                  {/* Info */}
-                  <div className="p-4">
-                    <p className="font-['Cormorant_Garamond'] text-lg font-medium text-gray-700 leading-tight mb-1">
-                      {product.name}
-                    </p>
-                    <p className="text-[11px] text-gray-400 leading-relaxed mb-3 line-clamp-2">
-                      {product.description ?? "Fórmula premium para piel radiante"}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-medium text-[#c05264]">${product.price}</span>
-                      <button
-                        aria-label="Agregar al carrito"
-                        onClick={(e) => handleAddToCart(e, product)}
-                        disabled={isAddingToCart}
-                        className="w-8 h-8 rounded-full bg-[#c05264] flex items-center justify-center hover:bg-[#a84354] transition-all duration-300 hover:scale-110 will-change-transform disabled:cursor-not-allowed disabled:opacity-70"
-                      >
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </button>
+                    {/* Info */}
+                    <div className="p-4">
+                      <p className="font-['Cormorant_Garamond'] text-lg font-medium text-gray-700 leading-tight mb-1">
+                        {product.name}
+                      </p>
+                      <p className="text-[11px] text-gray-400 leading-relaxed mb-3 line-clamp-2">
+                        {product.description ?? "Fórmula premium para piel radiante"}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-medium text-[#c05264]">${product.price}</span>
+                        <button
+                          aria-label="Agregar al carrito"
+                          onClick={(e) => handleAddToCart(e, product)}
+                          disabled={isAddingToCart}
+                          className="w-8 h-8 rounded-full bg-[#c05264] flex items-center justify-center hover:bg-[#a84354] transition-all duration-300 hover:scale-110 will-change-transform disabled:cursor-not-allowed disabled:opacity-70"
+                        >
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Dots */}
+          {!featured.length && (
+            <div className="py-16 text-center text-gray-500">
+              {error
+                ? 'No se pudieron cargar los productos. Intenta refrescar la página.'
+                : 'No hay productos disponibles en este momento.'}
+            </div>
+          )}
+
+        {/* Dots */}
+        {featured.length > 0 && (
           <div className="flex justify-center gap-2">
             {Array.from({ length: Math.max(0, total - VISIBLE + 1) }).map((_, i) => (
               <button
@@ -197,19 +205,20 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
               />
             ))}
           </div>
-        </div>
-
-        {/* CTA */}
-        <div className="flex justify-center mt-12 md:mt-16">
-          <button
-            onClick={() => router.push("/productos")}
-            className="border border-[#c05264]/30 text-[#c05264] hover:bg-[#c05264] hover:text-white rounded-full px-8 md:px-10 py-2 md:py-3 text-sm md:text-base transition-all duration-300"
-          >
-            Ver Todos los Productos
-          </button>
-        </div>
-
+        )}
       </div>
-    </section>
+
+      {/* CTA */}
+      <div className="flex justify-center mt-12 md:mt-16">
+        <button
+          onClick={() => router.push("/productos")}
+          className="border border-[#c05264]/30 text-[#c05264] hover:bg-[#c05264] hover:text-white rounded-full px-8 md:px-10 py-2 md:py-3 text-sm md:text-base transition-all duration-300"
+        >
+          Ver Todos los Productos
+        </button>
+      </div>
+
+    </div>
+  </section>
   );
 }

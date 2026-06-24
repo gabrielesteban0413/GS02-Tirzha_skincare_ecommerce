@@ -12,7 +12,7 @@ interface RecommendedSectionProps {
 
 export function RecommendedSection({ title, subtitle }: RecommendedSectionProps) {
   const router = useRouter();
-  const { data: products = [], isLoading } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
   const featured = products.slice(0, 8);
 
   if (isLoading) {
@@ -75,7 +75,11 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-500">No hay productos disponibles</div>
+          <div className="text-center py-12 text-gray-500">
+            {error
+              ? 'No se pudieron cargar los productos recomendados. Intenta refrescar.'
+              : 'No hay productos disponibles'}
+          </div>
         )}
       </div>
     </section>

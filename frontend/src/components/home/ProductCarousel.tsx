@@ -8,7 +8,7 @@ import { useProductsByType } from "@/hooks/use-products";
 
 export function ProductCarousel() {
   const router = useRouter();
-  const { data: products = [], isLoading } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -47,7 +47,17 @@ export function ProductCarousel() {
     </section>
   );
 
-  if (!products.length) return null;
+  if (!products.length && !isLoading) {
+    return (
+      <section className="py-16 px-4 md:px-8 lg:px-16 bg-[#fef7f2] overflow-hidden">
+        <div className="max-w-7xl mx-auto text-center py-16 text-gray-500">
+          {error
+            ? 'No se pudieron cargar los productos destacados. Intenta de nuevo más tarde.'
+            : 'No hay productos destacados disponibles en este momento.'}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 px-4 md:px-8 lg:px-16 bg-[#fef7f2] overflow-hidden">
@@ -165,7 +175,7 @@ export function ProductCarousel() {
 
         {/* Dots */}
         <div className="flex justify-center gap-1.5 mt-6">
-          {Array.from({ length: total - VISIBLE + 1 }).map((_, i) => (
+          {Array.from({ length: Math.max(0, total - VISIBLE + 1) }).map((_, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}
