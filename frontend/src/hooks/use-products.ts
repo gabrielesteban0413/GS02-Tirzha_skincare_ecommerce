@@ -31,6 +31,15 @@ export function useProductsBySolution(solution: string) {
   });
 }
 
+export function useProductsByCategory(category: string) {
+  return useQuery({
+    queryKey: ['products', 'category', category],
+    queryFn: () => productApi.getCategory(category),
+    staleTime: 5 * 60 * 1000,
+    enabled: !!category,
+  });
+}
+
 export function useAllProducts(filters?: { type?: string; solution?: string }) {
   return useQuery({
     queryKey: ['products', filters],
