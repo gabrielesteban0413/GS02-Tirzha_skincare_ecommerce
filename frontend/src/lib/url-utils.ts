@@ -26,13 +26,13 @@ export function getSubcategoriaUrl(categoria: string, subcategoria: string): str
   if (categoria === "informacion") {
     const infoMap: Record<string, string> = {
       "Rutinas": "/rutinas",
-      "Contacto": "/contacto",
+      "Contacto": "/informacion/contacto",
       "Preguntas Frecuentes": "/faq",
-      "Formas de Pago": "/formas-de-pago",
-      "Envíos y Devoluciones": "/envios-y-devoluciones",
-      "Tarjetas de Regalo": "/tarjetas-de-regalo",
+      "Formas de Pago": "/informacion/formas-de-pago",
+      "Envíos y Devoluciones": "/informacion/envios-y-devoluciones",
+      "Tarjetas de Regalo": "/informacion/tarjetas-de-regalo",
     };
-    return infoMap[subcategoria] || `/${subSlug}`;
+    return infoMap[subcategoria] || `/informacion/${subSlug}`;
   }
   return `/${subSlug}`;
 }
