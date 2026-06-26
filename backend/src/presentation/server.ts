@@ -18,7 +18,7 @@ const normalizeOrigin = (origin: string) => {
   return `https://${trimmed}`;
 };
 
-let corsOptions: cors.CorsOptions | undefined;
+let corsOptions: cors.CorsOptions;
 
 if (corsOrigin === '*') {
   corsOptions = { origin: '*' };
@@ -28,12 +28,15 @@ if (corsOrigin === '*') {
     .map((o) => o.trim())
     .filter(Boolean)
     .map(normalizeOrigin);
-  if (origins.length > 0) {
-    corsOptions = { origin: origins };
-  }
+  corsOptions = { origin: origins.length > 0 ? origins : '*' };
+} else {
+  corsOptions = { origin: '*' };
+  console.warn(
+    'CORS_ORIGIN is not defined. Backend will allow all origins by default. Set CORS_ORIGIN in production to the frontend domain for better security.'
+  );
 }
 
-console.log('CORS origins allowed:', corsOptions?.origin);
+console.log('CORS origins allowed:', corsOptions.origin);
 app.use(cors(corsOptions));
 
 app.use(express.json());
