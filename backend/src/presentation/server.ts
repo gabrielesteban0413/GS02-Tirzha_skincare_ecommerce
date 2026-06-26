@@ -38,6 +38,7 @@ if (corsOrigin === '*') {
 
 console.log('CORS origins allowed:', corsOptions.origin);
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use('/api', router);
