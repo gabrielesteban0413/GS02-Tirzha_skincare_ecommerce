@@ -9,7 +9,7 @@ const corsOrigin = process.env.CORS_ORIGIN;
 console.log('CORS_ORIGIN env:', corsOrigin);
 
 const normalizeOrigin = (origin: string) => {
-  const trimmed = origin.trim();
+  const trimmed = origin.trim().replace(/\/+$/, '');
   if (trimmed === '*') return '*';
   if (/^https?:\/\//i.test(trimmed)) return trimmed;
   if (trimmed === 'localhost' || trimmed.startsWith('localhost:')) {
