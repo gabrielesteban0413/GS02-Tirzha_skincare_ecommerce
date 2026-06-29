@@ -95,8 +95,9 @@ export const FOOTER_CONTENT = {
     },
   ],
   social: [
-    { label: "Instagram", href: "https://instagram.com" },
+    { label: "WhatsApp", href: "https://wa.me/3003524615" },
+    { label: "Instagram", href: "https://www.instagram.com/tirzahskincare/" },
     { label: "Facebook", href: "https://facebook.com" },
-    { label: "TikTok", href: "https://tiktok.com" },
+    { label: "TikTok", href: "https://www.tiktok.com/@tirzahskincare" },
   ],
 };

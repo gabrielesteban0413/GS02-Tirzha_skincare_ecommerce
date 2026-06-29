@@ -1,19 +1,36 @@
+import type { Metadata } from "next";
+import { InfoPage } from "@/components/legal/InfoPage";
+
+export const metadata: Metadata = {
+  title: "Política de privacidad | Tirzha Skincare",
+  description: "Conoce cómo protegemos tus datos personales, cómo los usamos y qué derechos tienes al comprar en Tirzha Skincare.",
+};
+
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto px-4 py-20">
-        <p className="text-sm uppercase tracking-[0.32em] text-[#c05264] mb-3">Política de Privacidad</p>
-        <h1 className="text-4xl font-semibold text-gray-900">Privacidad y seguridad</h1>
-        <p className="mt-6 text-gray-600 text-sm md:text-base leading-relaxed">
-          Nos comprometemos a proteger tu información personal y a usarla sólo con fines de mejora de tu experiencia de compra.
-        </p>
-        <div className="mt-10 rounded-3xl border border-gray-200 bg-[#fff9f8] p-6">
-          <h2 className="text-lg font-semibold text-gray-900">Tu información está segura</h2>
-          <p className="mt-3 text-gray-600 text-sm leading-relaxed">
-            No vendemos tus datos y sólo compartimos información cuando es necesario para procesar pedidos o cuando la ley lo exige.
-          </p>
-        </div>
-      </div>
-    </main>
+    <InfoPage
+      eyebrow="Política de privacidad"
+      title="Tu información está protegida en cada compra"
+      intro="En Tirzha Skincare tratamos tus datos con confidencialidad y solo los utilizamos para ofrecerte un servicio más preciso, seguro y personalizado."
+      sections={[
+        {
+          title: "Qué información recopilamos",
+          content: "Recopilamos datos como nombre, correo electrónico, teléfono, dirección de envío y datos de compra para procesar pedidos, responder consultas y mejorar tu experiencia."
+        },
+        {
+          title: "Cómo usamos tus datos",
+          content: "Utilizamos tu información para gestionar pedidos, proporcionar soporte, enviar actualizaciones relevantes y personalizar recomendaciones de productos según tus intereses."
+        },
+        {
+          title: "Protección y confidencialidad",
+          content: "Tus datos se almacenan de forma segura y no se venden ni comparten con terceros para fines comerciales, salvo cuando la ley lo exige o es necesario para completar un pedido."
+        },
+        {
+          title: "Tus derechos",
+          content: "Puedes solicitar el acceso, corrección o eliminación de tus datos en cualquier momento contactando con nuestro equipo de soporte."
+        },
+      ]}
+      cta={{ href: "/contacto", label: "Solicitar información" }}
+    />
   );
 }

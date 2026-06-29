@@ -3,6 +3,7 @@
 
 import { useRef, useState, useEffect, useCallback, type MouseEvent } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useProductsByType } from "@/hooks/use-products";
 import { useAddToCart } from "@/hooks/use-cart";
@@ -80,7 +81,13 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#c05264] font-medium mb-3">
             Lo más solicitado
           </p>
@@ -89,7 +96,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
           </h2>
           <div className="w-12 md:w-16 h-px bg-[#c05264]/40 mx-auto my-4 md:my-6" />
           <p className="text-gray-500 text-sm md:text-base">{subtitle}</p>
-        </div>
+        </motion.div>
 
         {/* Carousel */}
         <div className="space-y-8">
@@ -128,11 +135,15 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                 style={{ transform: `translateX(-${current * CARD_W}px)` }}
               >
                 {featured.map((product, i) => (
-                  <div
+                  <motion.div
                     key={product.id}
                     onClick={() => router.push(`/productos/${product.slug}`)}
                     className="relative flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
                     style={{ background: bgColors[i % bgColors.length] }}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.55, delay: Math.min(i * 0.03, 0.12), ease: [0.25, 0.46, 0.45, 0.94] }}
                   >
                     {/* Image */}
                     <div className="relative w-full h-[240px] overflow-hidden">
@@ -177,7 +188,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

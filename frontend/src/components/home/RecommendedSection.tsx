@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useProductsByType } from "@/hooks/use-products";
 
@@ -29,7 +30,13 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
     <section className="relative isolate py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-[#fef7f2] overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <p className="text-[11px] tracking-[0.2em] uppercase text-[#c05264] font-medium mb-3">
             Para ti
           </p>
@@ -38,16 +45,20 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
           </h2>
           <div className="w-12 md:w-16 h-px bg-[#c05264]/40 mx-auto my-4 md:my-6" />
           <p className="text-gray-500 text-sm md:text-base">{subtitle}</p>
-        </div>
+        </motion.div>
 
         {/* Recommended Products */}
         {featured.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-            {featured.map((product) => (
-              <div
+            {featured.map((product, index) => (
+              <motion.div
                 key={product.id}
                 onClick={() => router.push(`/productos/${product.slug}`)}
                 className="group cursor-pointer relative isolate"
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.55, delay: Math.min(index * 0.03, 0.12), ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <div className="text-center space-y-2">
                   {/* Image */}
@@ -71,7 +82,7 @@ export function RecommendedSection({ title, subtitle }: RecommendedSectionProps)
                   </h3>
                   <p className="text-[#c05264] font-semibold text-xs md:text-sm">${product.price}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (

@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 interface Treatment {
@@ -32,7 +33,13 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
     <section className="vitamin-section relative isolate py-10 md:py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)] overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-10 gap-4 animate-fade-in-up">
+        <motion.div
+          className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-10 gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <div>
             <p className="text-[11px] tracking-[0.2em] uppercase text-[#c05264] font-medium mb-2">
               Especialización
@@ -45,14 +52,18 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           <p className="text-sm text-gray-500 max-w-[200px] text-left sm:text-right leading-relaxed">
             {subtitle}
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6">
           {/* Hero card */}
           {hero && (
-            <div
+            <motion.div
               onClick={() => router.push(`/productos/categoria/${hero.slug}`)}
               className="relative lg:row-span-2 rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,244,247,0.98))] shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-[#c05264]/20 hover:-translate-y-2 will-change-transform"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div className="relative aspect-[4/3] sm:aspect-[3/4] w-full bg-[linear-gradient(135deg,#fff6f7_0%,#fff1e8_45%,#f4efff_100%)] overflow-hidden">
                 <Image
@@ -89,15 +100,19 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Medium cards */}
-          {mid.map((category: Treatment) => (
-            <div
+          {mid.map((category: Treatment, index: number) => (
+            <motion.div
               key={category.id}
               onClick={() => router.push(`/productos/categoria/${category.slug}`)}
               className="relative rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,245,247,0.98))] shadow-sm transition-all duration-400 ease-out hover:shadow-xl hover:-translate-y-1 will-change-transform"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: 0.06 * index, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div className="relative aspect-[4/3] bg-[linear-gradient(135deg,#fff6f7_0%,#fff1e8_50%,#f5f0ff_100%)] overflow-hidden">
                 <Image
@@ -131,15 +146,19 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
 
           {/* Small horizontal cards */}
-          {small.map((category: Treatment) => (
-            <div
+          {small.map((category: Treatment, index: number) => (
+            <motion.div
               key={category.id}
               onClick={() => router.push(`/productos/categoria/${category.slug}`)}
               className="relative rounded-2xl flex items-center gap-3 p-3 cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(255,245,247,0.96))] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md border border-white/60 will-change-transform"
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.05 * index, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <div className="w-12 h-12 rounded-xl bg-[#fdf0f2] flex items-center justify-center flex-shrink-0 relative overflow-hidden">
                 <Image
@@ -166,7 +185,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </button>
-            </div>
+            </motion.div>
           ))}
 
           {/* Ver todos */}

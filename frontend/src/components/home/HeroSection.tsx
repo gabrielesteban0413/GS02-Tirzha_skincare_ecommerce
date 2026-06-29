@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 interface HeroSectionProps {
@@ -39,10 +40,22 @@ export function HeroSection({
       }}
     >
       {/* Contenido */}
-      <div className="relative z-10 max-w-7xl mx-auto w-full">
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto w-full"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+      >
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-4 md:space-y-6">
+          <motion.div
+            className="space-y-4 md:space-y-6"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.65, delay: 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <span className="text-sm font-medium text-rose-400/80 tracking-wider">
               {badge}
             </span>
@@ -79,10 +92,16 @@ export function HeroSection({
                 {ctaSecondary}
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Image */}
-          <div className="relative flex justify-center items-center">
+          <motion.div
+            className="relative flex justify-center items-center"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <div className="relative w-full max-w-[280px] sm:max-w-[350px] md:max-w-[500px] lg:max-w-[650px] aspect-square mx-auto z-10">
               <Image
                 src="/images/home/hero-product.webp"
@@ -93,9 +112,9 @@ export function HeroSection({
                 sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 500px, 650px"
               />
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
