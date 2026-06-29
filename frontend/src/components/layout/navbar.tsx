@@ -70,7 +70,7 @@ export function Navbar() {
             <span className={`${titleFont.className} text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
               isScrolled ? "text-gray-700" : "text-[#c05264]"
             }`}>
-              Tirzah Skincare
+              TIRZAH SKINCARE
             </span>
           </Link>
 
