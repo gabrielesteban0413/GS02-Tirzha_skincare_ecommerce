@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/legal/InfoPage";
 
 export const metadata: Metadata = {
-  title: "Términos y condiciones | Tirzha Skincare",
-  description: "Consulta los términos de uso, compra y servicio de Tirzha Skincare para una experiencia segura y transparente.",
+  title: "Términos y condiciones | Tirzah Skincare",
+  description: "Consulta los términos de uso, compra y servicio de Tirzah Skincare para una experiencia segura y transparente.",
 };
 
 export default function TermsPage() {
   return (
     <InfoPage
       eyebrow="Términos y condiciones"
-      title="Condiciones de uso y compra en Tirzha Skincare"
-      intro="Al comprar en Tirzha Skincare aceptas nuestras condiciones de compra, uso del sitio y políticas de servicio. Nuestro objetivo es que cada pedido sea claro, seguro y satisfactorio."
+      title="Condiciones de uso y compra en Tirzah Skincare"
+      intro="Al comprar en Tirzah Skincare aceptas nuestras condiciones de compra, uso del sitio y políticas de servicio. Nuestro objetivo es que cada pedido sea claro, seguro y satisfactorio."
       sections={[
         {
           title: "Uso del sitio",
@@ -19,11 +19,11 @@ export default function TermsPage() {
         },
         {
           title: "Compras y pagos",
-          content: "Los productos se reservan mediante la confirmación del pedido y la aceptación del pago. Tirzha Skincare puede modificar precios, promociones o disponibilidad sin previo aviso, siempre dentro de las condiciones vigentes en el momento de la compra.",
+          content: "Los productos se reservan mediante la confirmación del pedido y la aceptación del pago. Tirzah Skincare puede modificar precios, promociones o disponibilidad sin previo aviso, siempre dentro de las condiciones vigentes en el momento de la compra.",
         },
         {
           title: "Envíos y entregas",
-          content: "Los tiempos de entrega pueden variar según la ubicación, la disponibilidad del stock y los operadores logísticos. Tirzha Skincare no se responsabiliza por retrasos ocasionados por terceros o causas ajenas a su control.",
+          content: "Los tiempos de entrega pueden variar según la ubicación, la disponibilidad del stock y los operadores logísticos. Tirzah Skincare no se responsabiliza por retrasos ocasionados por terceros o causas ajenas a su control.",
         },
         {
           title: "Responsabilidad del cliente",

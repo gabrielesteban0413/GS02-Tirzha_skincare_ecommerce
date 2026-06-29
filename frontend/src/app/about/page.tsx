@@ -3,7 +3,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       <div className="max-w-5xl mx-auto px-4 py-20">
         <p className="text-sm uppercase tracking-[0.32em] text-[#c05264] mb-3">Sobre Nosotros</p>
-        <h1 className="text-4xl md:text-5xl font-semibold text-gray-900">Tirzha Skincare</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold text-gray-900">Tirzah Skincare</h1>
         <p className="mt-6 text-gray-600 leading-relaxed text-sm md:text-base">
           En Tirzha trabajamos para que cada piel recupere equilibrio, luminosidad y salud real. Usamos ingredientes respaldados por la ciencia y rutinas pensadas para tus necesidades diarias.
         </p>

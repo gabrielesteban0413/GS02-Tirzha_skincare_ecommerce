@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/legal/InfoPage";
 
 export const metadata: Metadata = {
-  title: "Envíos y devoluciones | Tirzha Skincare",
-  description: "Descubre las condiciones de envío, seguimiento y devoluciones de Tirzha Skincare para pedidos nacionales.",
+  title: "Envíos y devoluciones | Tirzah Skincare",
+  description: "Descubre las condiciones de envío, seguimiento y devoluciones de Tirzah Skincare para pedidos nacionales.",
 };
 
 export default function ShippingPage() {

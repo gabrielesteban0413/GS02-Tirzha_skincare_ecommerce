@@ -61,7 +61,7 @@ export function Navbar() {
             <div className="relative w-8 h-8 md:w-10 md:h-10">
               <Image
                 src="/favicon.png"
-                alt="Tirzha Skincare"
+                alt="Tirzah Skincare"
                 width={40}
                 height={40}
                 className="object-contain"
@@ -70,7 +70,7 @@ export function Navbar() {
             <span className={`${titleFont.className} text-xl md:text-2xl font-bold tracking-tight transition-colors duration-300 ${
               isScrolled ? "text-gray-700" : "text-[#c05264]"
             }`}>
-              TIRZHA SKINCARE
+              Tirzah Skincare
             </span>
           </Link>
 

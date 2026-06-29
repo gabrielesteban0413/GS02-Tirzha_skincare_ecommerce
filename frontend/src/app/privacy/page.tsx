@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { InfoPage } from "@/components/legal/InfoPage";
 
 export const metadata: Metadata = {
-  title: "Política de privacidad | Tirzha Skincare",
-  description: "Conoce cómo protegemos tus datos personales, cómo los usamos y qué derechos tienes al comprar en Tirzha Skincare.",
+  title: "Política de privacidad | Tirzah Skincare",
+  description: "Conoce cómo protegemos tus datos personales, cómo los usamos y qué derechos tienes al comprar en Tirzah Skincare.",
 };
 
 export default function PrivacyPage() {
@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <InfoPage
       eyebrow="Política de privacidad"
       title="Tu información está protegida en cada compra"
-      intro="En Tirzha Skincare tratamos tus datos con confidencialidad y solo los utilizamos para ofrecerte un servicio más preciso, seguro y personalizado."
+      intro="En Tirzah Skincare tratamos tus datos con confidencialidad y solo los utilizamos para ofrecerte un servicio más preciso, seguro y personalizado."
       sections={[
         {
           title: "Qué información recopilamos",

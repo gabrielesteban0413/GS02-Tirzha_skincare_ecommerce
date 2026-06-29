@@ -1,5 +1,5 @@
 # 🏗️ PLAN DE REFACTORING - CLEAN ARCHITECTURE
-## Tirzha Skincare Ecommerce
+## Tirzah Skincare Ecommerce
 
 **Fecha**: 2026-06-05  
 **Objetivo**: Restaurar Clean Architecture en backend y frontend  

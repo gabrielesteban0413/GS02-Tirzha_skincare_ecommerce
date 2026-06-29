@@ -10,7 +10,7 @@ const titleFont = Montserrat({ weight: '700', subsets: ['latin'] });
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Tirzha Skincare',
+  title: 'Tirzah Skincare',
   description: 'Unlock your skin natural beauty',
   icons: {
     icon: '/favicon.svg',

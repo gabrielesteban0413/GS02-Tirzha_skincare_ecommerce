@@ -1,4 +1,4 @@
-# Tirzha Skincare Ecommerce
+# Tirzah Skincare Ecommerce
 
 
 image= 

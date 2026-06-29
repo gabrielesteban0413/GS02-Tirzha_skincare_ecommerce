@@ -62,7 +62,7 @@ export const OFFER_CONTENT = {
 
 export const FOOTER_CONTENT = {
   company: {
-    name: "Tirzha Skincare",
+    name: "Tirzah Skincare",
     description: "Cuidado de piel premium con ingredientes naturales y científicamente probados.",
   },
   sections: [

@@ -1,4 +1,4 @@
-# DEPLOYMENT GUIDE - Tirzha Skincare
+# DEPLOYMENT GUIDE - Tirzah Skincare
 
 ## Problema con Netlify
 
