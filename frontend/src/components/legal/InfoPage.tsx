@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/Footer";
+import { FOOTER_CONTENT } from "@/data/home.content";
 
 interface Section {
   title: string;
@@ -21,7 +23,7 @@ export function InfoPage({ eyebrow, title, intro, sections, cta }: InfoPageProps
   return (
     <main className="min-h-screen bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)]">
       <Navbar />
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28">
         <section className="rounded-[2rem] border border-[#f2d9d1] bg-[#fff9f8] p-8 shadow-sm md:p-10">
           <p className="text-[11px] tracking-[0.32em] uppercase text-[#c05264] font-semibold">
             {eyebrow}
@@ -60,6 +62,7 @@ export function InfoPage({ eyebrow, title, intro, sections, cta }: InfoPageProps
           </div>
         )}
       </div>
+      <Footer {...FOOTER_CONTENT} />
     </main>
   );
 }

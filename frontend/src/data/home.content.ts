@@ -4,7 +4,7 @@ export const HERO_CONTENT = {
   highlight: "Dale lo que de verdad necesita.",
   description: "Vitamina + Resultados Reales.",
   priceLabel: "Desde",
-  price: "$40.000",
+  price: "$50.000",
   ctaPrimary: "Compra Ahora",
   ctaSecondary: "Conoce Más →",
 };

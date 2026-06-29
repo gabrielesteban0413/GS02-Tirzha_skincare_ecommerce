@@ -29,6 +29,11 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
     return `/images/categories/${slug}.webp`;
   };
 
+  const getCategoryUrl = (category: Treatment) =>
+    category.slug === "rutinas"
+      ? "/rutinas"
+      : `/productos/categoria/${category.slug}`;
+
   return (
     <section className="vitamin-section relative isolate py-10 md:py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)] overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -58,7 +63,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           {/* Hero card */}
           {hero && (
             <motion.div
-              onClick={() => router.push(`/productos/categoria/${hero.slug}`)}
+              onClick={() => router.push(getCategoryUrl(hero))}
               className="relative lg:row-span-2 rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,244,247,0.98))] shadow-sm transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-[#c05264]/20 hover:-translate-y-2 will-change-transform"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +94,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      router.push(`/productos/categoria/${hero.slug}`);
+                      router.push(getCategoryUrl(hero));
                     }}
                     className="inline-flex items-center gap-2 text-[#c05264] font-medium group-hover:translate-x-1 transition-transform text-sm"
                   >
@@ -107,7 +112,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           {mid.map((category: Treatment, index: number) => (
             <motion.div
               key={category.id}
-              onClick={() => router.push(`/productos/categoria/${category.slug}`)}
+              onClick={() => router.push(getCategoryUrl(category))}
               className="relative rounded-2xl overflow-hidden cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.98),rgba(255,245,247,0.98))] shadow-sm transition-all duration-400 ease-out hover:shadow-xl hover:-translate-y-1 will-change-transform"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -135,7 +140,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      router.push(`/productos/categoria/${category.slug}`);
+                      router.push(getCategoryUrl(category));
                     }}
                     className="inline-flex items-center gap-1 text-[#c05264] font-medium group-hover:translate-x-1 transition-transform text-xs"
                   >
@@ -153,7 +158,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           {small.map((category: Treatment, index: number) => (
             <motion.div
               key={category.id}
-              onClick={() => router.push(`/productos/categoria/${category.slug}`)}
+              onClick={() => router.push(getCategoryUrl(category))}
               className="relative rounded-2xl flex items-center gap-3 p-3 cursor-pointer group bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(255,245,247,0.96))] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md border border-white/60 will-change-transform"
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -177,7 +182,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push(`/productos/categoria/${category.slug}`);
+                  router.push(getCategoryUrl(category));
                 }}
                 className="w-6 h-6 rounded-full bg-[#c05264] flex items-center justify-center flex-shrink-0 hover:bg-[#a84354] transition-all hover:scale-110 will-change-transform"
               >

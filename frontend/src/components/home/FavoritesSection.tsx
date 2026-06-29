@@ -1,7 +1,7 @@
 // frontend/src/components/home/FavoritesSection.tsx
 "use client";
 
-import { useRef, useState, useEffect, useCallback, type MouseEvent } from "react";
+import { useRef, useState, useEffect, useCallback, type MouseEvent, type TouchEvent } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -20,6 +20,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef<number | null>(null);
   const VISIBLE = 3;
   const featured = products.slice(0, 12);
   const total = featured.length;
@@ -41,6 +42,26 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
     autoRef.current = setInterval(() => {
       setCurrent(prev => (prev + 1 > total - VISIBLE ? 0 : prev + 1));
     }, 3200);
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartX.current;
+    const endX = event.changedTouches[0]?.clientX ?? null;
+
+    if (startX === null || endX === null) return;
+
+    const delta = startX - endX;
+    if (delta > 50) {
+      goTo(current + 1);
+    } else if (delta < -50) {
+      goTo(current - 1);
+    }
+
+    touchStartX.current = null;
   };
 
   const bgColors = [
@@ -125,9 +146,11 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
 
           {featured.length > 0 && (
             <div
-              className="overflow-hidden"
+              className="overflow-hidden touch-pan-y"
               onMouseEnter={stopAuto}
               onMouseLeave={startAuto}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
             >
               <div
                 ref={trackRef}
