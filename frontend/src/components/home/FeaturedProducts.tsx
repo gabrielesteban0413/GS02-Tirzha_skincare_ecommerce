@@ -9,12 +9,15 @@ import { motion } from "framer-motion";
 interface FeaturedProductsProps {
   products: Product[];
   loading: boolean;
-  error: string | null;
+  error: unknown;
 }
 
 export function FeaturedProducts({ products, loading, error }: FeaturedProductsProps) {
   if (loading) return <div className="py-20 text-center">Cargando productos...</div>;
-  if (error) return <div className="py-20 text-center text-red-500">Error: {error}</div>;
+  if (error) {
+    const message = typeof error === 'string' ? error : (error as any)?.message ?? String(error);
+    return <div className="py-20 text-center text-red-500">Error: {message}</div>;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
