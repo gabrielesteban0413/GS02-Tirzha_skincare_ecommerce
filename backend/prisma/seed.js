@@ -45,6 +45,15 @@ function main() {
                 case 0: return [4 /*yield*/, prisma.product.createMany({
                         data: [
                             {
+                                name: 'Protector Solar - Hyalu Cica Water Fit Sun Serum',
+                                slug: 'protector-solar-hyalu-cica-water-fit-sun-serum',
+                                description: 'Protector solar con centella y ácido hialurónico para piel hidratada y protegida.',
+                                price: 50.0,
+                                imageUrl: '/images/products/Protector Solar- Hyalu Cica Water Fit Sun Serum.png',
+                                type: 'protectores-solares',
+                                solution: 'proteccion-solar',
+                            },
+                            {
                                 name: 'Limpiador Facial Suave',
                                 slug: 'limpiador-facial-suave',
                                 description: 'Limpiador suave para piel sensible',

@@ -4,11 +4,11 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useProductsByType } from "@/hooks/use-products";
+import { useFeaturedProducts } from "@/hooks/use-products";
 
 export function ProductCarousel() {
   const router = useRouter();
-  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useFeaturedProducts();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);

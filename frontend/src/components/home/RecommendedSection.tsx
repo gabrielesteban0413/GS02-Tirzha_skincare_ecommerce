@@ -4,7 +4,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useProductsByType } from "@/hooks/use-products";
+import { useFeaturedProducts } from "@/hooks/use-products";
 
 interface RecommendedSectionProps {
   title: string;
@@ -13,7 +13,7 @@ interface RecommendedSectionProps {
 
 export function RecommendedSection({ title, subtitle }: RecommendedSectionProps) {
   const router = useRouter();
-  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useFeaturedProducts();
   const featured = products.slice(0, 8);
 
   if (isLoading) {

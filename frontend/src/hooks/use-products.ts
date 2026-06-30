@@ -22,6 +22,27 @@ export function useProductsByType(type: string) {
   });
 }
 
+export function useFeaturedProducts(types: string[] = ['hidratantes', 'protectores-solares']) {
+  return useQuery({
+    queryKey: ['products', 'featured', types.join(',')],
+    queryFn: async () => {
+      const requests = types.map((type) => productApi.getByType(type).catch(() => [] as Product[]));
+      const results = await Promise.all(requests);
+      const seen = new Set<string>();
+
+      return results.flat().filter((product) => {
+        if (!product?.isActive) return false;
+        const key = product.id || `${product.slug}-${product.name}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    },
+    staleTime: 5 * 60 * 1000,
+    enabled: types.length > 0,
+  });
+}
+
 export function useProductsBySolution(solution: string) {
   return useQuery({
     queryKey: ['products', 'solution', solution],

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
 import { categorias } from "@/data/categories";
+import { useCart } from "@/hooks/use-cart";
 import { getSubcategoriaUrl } from "@/lib/url-utils";
 
 const titleFont = Poppins({ weight: "700", subsets: ["latin"] });
@@ -20,6 +21,9 @@ export function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<keyof typeof categorias | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { data: cart } = useCart();
+
+  const cartQuantity = cart?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -141,10 +145,15 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link href="/carrito" className="text-gray-700 hover:text-[#c05264] transition-colors">
+            <Link href="/carrito" className="relative text-gray-700 hover:text-[#c05264] transition-colors">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6M17 13l1.5 6M9 21h6M12 15v6" />
               </svg>
+              {cartQuantity > 0 && (
+                <span className="absolute -top-1 -right-1 inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-[#c05264] px-1.5 py-0.5 text-[11px] font-semibold text-white">
+                  {cartQuantity}
+                </span>
+              )}
             </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -207,9 +216,14 @@ export function Navbar() {
           <Link
             href="/carrito"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-gray-800 py-2 border-b border-gray-100 text-lg"
+            className="flex items-center justify-between py-2 border-b border-gray-100 text-lg text-gray-800"
           >
-            Carrito
+            <span>Carrito</span>
+            {cartQuantity > 0 && (
+              <span className="inline-flex min-w-[1.25rem] items-center justify-center rounded-full bg-[#c05264] px-2 py-0.5 text-[11px] font-semibold text-white">
+                {cartQuantity}
+              </span>
+            )}
           </Link>
         </div>
       </div>

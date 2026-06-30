@@ -5,7 +5,7 @@ import { useRef, useState, useEffect, useCallback, type MouseEvent, type TouchEv
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useProductsByType } from "@/hooks/use-products";
+import { useFeaturedProducts } from "@/hooks/use-products";
 import { useAddToCart } from "@/hooks/use-cart";
 
 interface FavoritesSectionProps {
@@ -15,7 +15,7 @@ interface FavoritesSectionProps {
 
 export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
   const router = useRouter();
-  const { data: products = [], isLoading, error } = useProductsByType("hidratantes");
+  const { data: products = [], isLoading, error } = useFeaturedProducts();
   const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
   const trackRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);

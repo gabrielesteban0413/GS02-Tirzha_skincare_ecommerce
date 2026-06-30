@@ -3,20 +3,20 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Limpiar productos existentes
+
   await prisma.product.deleteMany({});
 
   await prisma.product.createMany({
     data: [
-      // Hidratantes - Vitamin Section
+ 
       {
-        name: 'Crema Hidratante Vitamina C',
-        slug: 'crema-hidratante-vitamina-c',
-        description: 'Crema hidratante premium con vitamina C para revitalizar la piel',
-        price: 45.99,
-        imageUrl: '/images/products/crema-hidratante-vitamina-c-main.webp',
-        type: 'hidratantes',
-        solution: 'deshidratacion',
+        name: 'Protector Solar - Hyalu Cica Water Fit Sun Serum',
+        slug: 'protector-solar-hyalu-cica-water-fit-sun-serum',
+        description: 'Protector solar con centella y ácido hialurónico para piel hidratada y protegida.',
+        price: 50.0,
+        imageUrl: '/images/products/Protector Solar- Hyalu Cica Water Fit Sun Serum.png',
+        type: 'protectores-solares',
+        solution: 'proteccion-solar',
         stock: 15,
       },
       {
