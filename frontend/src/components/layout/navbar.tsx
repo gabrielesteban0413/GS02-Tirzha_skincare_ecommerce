@@ -13,7 +13,7 @@ const titleFont = Poppins({ weight: "700", subsets: ["latin"] });
 
 type MenuItem =
   | { name: string; href: string; hasDropdown: false }
-  | { name: string; hasDropdown: true; key: keyof typeof categorias };
+  | { name: string; href: string; hasDropdown: true; key: keyof typeof categorias };
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,9 +48,9 @@ export function Navbar() {
 
   const menuItems: MenuItem[] = [
     { name: "HOME", href: "/", hasDropdown: false },
-    { name: "PRODUCTOS", hasDropdown: true, key: "productos" },
-    { name: "TRATAMIENTOS", hasDropdown: true, key: "tratamientos" },
-    { name: "INFORMACION", hasDropdown: true, key: "informacion" },
+    { name: "PRODUCTOS", href: "/productos", hasDropdown: false },
+    { name: "TRATAMIENTOS", href: "/categorias", hasDropdown: true, key: "tratamientos" },
+    { name: "INFORMACION", href: "/contacto", hasDropdown: true, key: "informacion" },
   ];
 
   return (
