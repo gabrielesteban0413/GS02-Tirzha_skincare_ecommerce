@@ -29,79 +29,54 @@ interface FooterProps {
 
 export function Footer({ company, sections, social }: FooterProps) {
   const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      {/* Main Content */}
-      <div className="px-4 md:px-8 lg:px-16 py-16 md:py-20">
-        <div className="max-w-7xl mx-auto">
-          {/* Top Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 mb-12 md:mb-16">
-            {/* Company Info */}
-            <div className="lg:col-span-2">
-              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">
-                {company.name}
-              </h3>
-              <p className="text-sm md:text-base text-gray-400 leading-relaxed">
-                {company.description}
-              </p>
+    <footer className="relative text-white">
+      <div
+        className="relative overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: "linear-gradient(90deg, rgba(8, 8, 10, 0.76), rgba(15, 23, 42, 0.87)), url('/images/footer-bg.jpg')" }}
+      >
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-[10vw] md:text-[8vw] lg:text-[6.5vw] font-extrabold tracking-tight text-white/10 select-none">TIRZAH SKINCARE</span>
+          </div>
+        </div>
 
-              {/* Social Links */}
-              <div className="flex gap-4 mt-6">
-                {social.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-[#c05264] transition-colors text-sm"
-                  >
-                    {link.label}
-                  </a>
-                ))}
+        <div className="px-6 py-16 md:px-12 md:py-24">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {/* Left area - CTA */}
+            <div className="lg:col-span-1">
+              <h2 className="text-sm uppercase tracking-widest text-[#f8d7db]">Tirzah Skincare</h2>
+
+              <p className="mt-4 text-sm text-white/80 max-w-md">Cuidado de piel premium con ingredientes naturales y científicamente probados.</p>
+              <div className="mt-6 flex items-center gap-4">
+                <a href="/ofertas" className="btn-offers">Ver Ofertas</a>
+                <a href="mailto:hello@tirzahskincare.com" className="text-sm text-white/90">hello@tirzahskincare.com</a>
               </div>
             </div>
 
-            {/* Links Sections */}
-            {sections.map((section) => (
-              <div key={section.title}>
-                <h4 className="text-sm font-semibold text-white mb-4">{section.title}</h4>
-                <ul className="space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-gray-400 hover:text-[#c05264] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Right area - Links columns */}
+            <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-6">
+              {sections.map((section) => (
+                <div key={section.title}>
+                  <h4 className="text-sm font-semibold text-white/90 mb-3">{section.title}</h4>
+                  <ul className="space-y-2">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <Link href={link.href} className="text-sm text-white/80 hover:text-white transition-colors">{link.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Divider */}
-          <div className="h-px bg-gray-800 mb-8" />
-
-          {/* Bottom Section */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs md:text-sm text-gray-500 text-center md:text-left">
-              © {currentYear} {company.name}. Todos los derechos reservados.
-            </p>
-
-            {/* Payment Methods (Optional) */}
-            <div className="flex gap-3 items-center">
-              <span className="text-xs text-gray-500">Métodos de pago:</span>
-              <div className="flex gap-2">
-                <span className="text-xs px-2 py-1 bg-gray-800 rounded text-gray-400">
-                  Tarjeta
-                </span>
-                <span className="text-xs px-2 py-1 bg-gray-800 rounded text-gray-400">
-                  Transferencia
-                </span>
-              </div>
+          <div className="mt-12 border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-white/60">© {currentYear} {company.name}. Todos los derechos reservados.</p>
+            <div className="flex items-center gap-4 text-sm text-white/70">
+              <span>Privacy & Terms</span>
+              <span>|</span>
+              <span>+1 (234) 567-890</span>
             </div>
           </div>
         </div>
