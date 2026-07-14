@@ -24,7 +24,7 @@ async function main() {
         slug: 'gel-hidratante-aloe-vit-b5',
         description: 'Gel ligero con aloe vera y vitamina B5 para hidratación profunda',
         price: 28.50,
-        imageUrl: '/images/products/gel-hidratante-aloe-vit-b5.webp',
+        imageUrl: '/images/products/hidratante_medicube - Crema Facial Deep Vita C Capsule Cream.webp',
         type: 'hidratantes',
         solution: 'deshidratacion',
         stock: 22,
