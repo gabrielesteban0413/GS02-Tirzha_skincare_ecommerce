@@ -49,7 +49,7 @@ export function Navbar() {
   const menuItems: MenuItem[] = [
     { name: "HOME", href: "/", hasDropdown: false },
     { name: "PRODUCTOS", href: "/productos", hasDropdown: false },
-    { name: "TRATAMIENTOS", href: "/categorias", hasDropdown: true, key: "tratamientos" },
+    { name: "TRATAMIENTOS", href: "/tratamientos", hasDropdown: false },
     { name: "INFORMACION", href: "/contacto", hasDropdown: true, key: "informacion" },
   ];
 

@@ -13,11 +13,11 @@ export class Money {
     this.currency = currency;
   }
 
-  static create(amount: number, currency: string = 'USD'): Money {
+  static create(amount: number, currency: string = 'COP'): Money {
     return new Money(amount, currency);
   }
 
-  static zero(currency: string = 'USD'): Money {
+  static zero(currency: string = 'COP'): Money {
     return new Money(0, currency);
   }
 

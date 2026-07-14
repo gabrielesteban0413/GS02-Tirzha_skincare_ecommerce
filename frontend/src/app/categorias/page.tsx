@@ -6,16 +6,16 @@ import { FOOTER_CONTENT } from "@/data/home.content";
 import { CATEGORY_PAGE_ITEMS } from "@/data/categories";
 
 export const metadata: Metadata = {
-  title: "Categorías de skincare | Tirzha Skincare",
+  title: "Tratamientos premium | Tirzha Skincare",
   description:
-    "Explora categorías de skincare premium como cremas hidratantes, limpiadores, sérums, mascarillas y protectores solares para construir una rutina completa.",
+    "Explora tratamientos premium para luminosidad, hidratación, protección, acné y más, organizados para construir una rutina completa.",
   alternates: {
     canonical: "/categorias",
   },
   openGraph: {
-    title: "Categorías de skincare | Tirzha Skincare",
+    title: "Tratamientos premium | Tirzha Skincare",
     description:
-      "Descubre productos premium organizados por categoría para cada paso de tu rutina facial.",
+      "Descubre tratamientos premium organizados por necesidad y objetivo de cuidado facial.",
     type: "website",
     url: "/categorias",
   },
@@ -25,9 +25,9 @@ export default function CategoriasPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Categorías de skincare | Tirzha Skincare",
+    name: "Tratamientos premium | Tirzha Skincare",
     description:
-      "Explora categorías de skincare premium como cremas hidratantes, limpiadores, sérums, mascarillas y protectores solares para construir una rutina completa.",
+      "Explora tratamientos premium para luminosidad, hidratación, protección, acné y más, organizados para construir una rutina completa.",
     url: "https://www.tirzhaskincare.com/categorias",
     hasPart: CATEGORY_PAGE_ITEMS.map((item) => ({
       "@type": "Thing",
@@ -44,8 +44,8 @@ export default function CategoriasPage() {
       />
       <Navbar />
       <CategoryShowcase
-        title="Encuentra la categoría ideal para tu rutina."
-        intro="Explora nuestros tratamientos y productos organizados por necesidad, textura y objetivo de cuidado facial. Cada selección está pensada para ofrecerte una experiencia premium, visualmente atractiva y fácil de navegar."
+        title="Encuentra el tratamiento ideal para tu rutina."
+        intro="Explora tratamientos pensados para luminosidad, hidratación, protección, acné y más, organizados por necesidad y objetivo de cuidado facial. Cada selección está pensada para ofrecerte una experiencia premium, visualmente atractiva y fácil de navegar."
         items={CATEGORY_PAGE_ITEMS}
       />
       <Footer {...FOOTER_CONTENT} />

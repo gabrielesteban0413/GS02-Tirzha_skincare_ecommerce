@@ -10,7 +10,7 @@ export class ProductMapper {
       raw.name,
       raw.slug,
       raw.description,
-      Money.create(raw.price, 'USD'),
+      Money.create(raw.price, 'COP'),
       Stock.create(raw.stock || 0),
       raw.type,
       raw.solution,

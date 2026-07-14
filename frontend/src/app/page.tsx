@@ -26,7 +26,7 @@ export default function Home() {
       <FavoritesSection {...FAVORITES_CONTENT} />
       <OffersConsultationSection />
       <a
-        href="https://wa.me/3003524615"
+        href="https://wa.me/+573003524615"
         target="_blank"
         rel="noreferrer"
         className="whatsapp-floating"

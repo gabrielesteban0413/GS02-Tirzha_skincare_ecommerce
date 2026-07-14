@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ProductCard } from "@/components/product/ProductCard";
@@ -33,7 +34,7 @@ const CATALOG_SECTIONS = [
     type: "hidratantes",
   },
   {
-    key: "serums",
+    key: "sueros",
     title: "SUEROS",
     subtitle: "Concentrados premium para tratamientos y resultados visibles.",
     type: "sueros",
@@ -45,13 +46,13 @@ const CATALOG_SECTIONS = [
     type: "tonicos",
   },
   {
-    key: "contorno",
+    key: "contorno-de-ojos",
     title: "CONTORNO DE OJOS",
     subtitle: "Atención específica para la zona más delicada del rostro.",
     type: "contorno-de-ojos",
   },
   {
-    key: "protectores",
+    key: "protectores-solares",
     title: "PROTECTORES SOLARES",
     subtitle: "Protección diaria con confort, luminosidad y finish elegante.",
     type: "protectores-solares",
@@ -75,7 +76,7 @@ const CATALOG_SECTIONS = [
     type: "suplementos",
   },
   {
-    key: "cabello",
+    key: "tratamiento-para-cabello",
     title: "TRATAMIENTO PARA CABELLO",
     subtitle: "Cuidado especializado para fortalecer y nutrir el cabello.",
     type: "tratamiento-para-cabello",
@@ -103,14 +104,14 @@ export default function ProductsPage() {
     esencias,
     exfoliantes,
     hidratantes,
-    serums,
+    sueros: serums,
     tonicos,
-    contorno,
-    protectores,
+    "contorno-de-ojos": contorno,
+    "protectores-solares": protectores,
     maquillaje,
     mascarillas,
     suplementos,
-    cabello,
+    "tratamiento-para-cabello": cabello,
   };
 
   const visibleSections = useMemo(() => {
@@ -215,8 +216,16 @@ export default function ProductsPage() {
                   <h3 className="text-2xl font-semibold text-gray-900">{section.title}</h3>
                   <p className="mt-2 text-sm text-gray-500">{section.subtitle}</p>
                 </div>
-                <div className="rounded-full border border-[#f3d3da] bg-[#fff8fa] px-4 py-2 text-sm text-gray-600">
-                  {section.isLoading ? "Cargando..." : `${section.products.length} producto${section.products.length === 1 ? "" : "s"}`}
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full border border-[#f3d3da] bg-[#fff8fa] px-4 py-2 text-sm text-gray-600">
+                    {section.isLoading ? "Cargando..." : `${section.products.length} producto${section.products.length === 1 ? "" : "s"}`}
+                  </div>
+                  <Link
+                    href={`/productos/categoria/${section.key}`}
+                    className="rounded-full border border-[#e7c7cf] bg-white px-4 py-2 text-sm font-medium text-[#c05264] transition-all duration-300 hover:bg-[#fdf0f2]"
+                  >
+                    Ver todos
+                  </Link>
                 </div>
               </div>
 

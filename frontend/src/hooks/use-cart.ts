@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { cartApi, AddToCartPayload, Cart } from '@/infrastructure/api/cart.api';
 
@@ -114,9 +115,16 @@ function removeLocalItem(existingCart: Cart, productId: string): Cart {
 }
 
 export function useCart() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const persisted = readLocalCart();
+    queryClient.setQueryData(['cart'], persisted);
+  }, [queryClient]);
+
   return useQuery<Cart>({
     queryKey: ['cart'],
-    initialData: readLocalCart(),
+    initialData: createEmptyCart(),
     queryFn: async () => {
       try {
         const cart = await cartApi.get();

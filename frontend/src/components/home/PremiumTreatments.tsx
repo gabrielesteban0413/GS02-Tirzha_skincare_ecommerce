@@ -32,7 +32,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
   const getCategoryUrl = (category: Treatment) =>
     category.slug === "rutinas"
       ? "/rutinas"
-      : `/productos/categoria/${category.slug}`;
+      : `/tratamientos/${category.slug}`;
 
   return (
     <section className="vitamin-section relative isolate py-10 md:py-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-[rgba(251,215,203,0.4)] to-[rgba(255,191,207,0.4)] overflow-hidden">
@@ -196,7 +196,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
           {/* Ver todos */}
           {categories.length > 3 && (
             <div
-              onClick={() => router.push("/productos")}
+              onClick={() => router.push("/tratamientos")}
               className="rounded-2xl flex items-center gap-3 p-3 cursor-pointer border border-dashed border-[#c05264]/30 hover:border-[#c05264]/60 transition-all duration-300 hover:bg-[#c05264]/10 hover:-translate-y-0.5 will-change-transform bg-white/30 backdrop-blur-sm"
             >
               <div className="w-12 h-12 rounded-xl border border-dashed border-[#c05264]/30 flex items-center justify-center flex-shrink-0 hover:border-[#c05264]/60 transition-all">
@@ -216,7 +216,7 @@ export function PremiumTreatments({ title, subtitle, categories }: PremiumTreatm
         <div className="flex items-center gap-6 mt-10">
           <div className="flex-1 h-px bg-gray-300/50" />
           <button
-            onClick={() => router.push("/productos")}
+            onClick={() => router.push("/tratamientos")}
             className="text-sm text-[#c05264] border border-[#c05264]/30 rounded-full px-7 py-2.5 hover:bg-[#c05264] hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-md active:scale-95 will-change-transform"
           >
             Explorar colección

@@ -33,7 +33,7 @@ export function Footer({ company, sections, social }: FooterProps) {
     <footer className="relative text-white">
       <div
         className="relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: "linear-gradient(90deg, rgba(8, 8, 10, 0.76), rgba(15, 23, 42, 0.87)), url('/images/footer-bg.jpg')" }}
+        style={{ backgroundImage: "linear-gradient(90deg, rgba(8, 8, 10, 0.76), rgba(15, 23, 42, 0.87)), url('/images/home/trending-bg.webp')" }}
       >
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute inset-0 flex items-center justify-center">

@@ -18,7 +18,7 @@ export function CategoryShowcase({ title, intro, items }: CategoryShowcaseProps)
         <div className="grid gap-8 p-8 md:grid-cols-[1.2fr_0.8fr] md:p-10 lg:p-12">
           <div className="flex flex-col justify-center">
             <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#c05264]">
-              Categorías premium
+              Tratamientos premium
             </p>
             <h1 className="mt-3 text-3xl font-semibold leading-tight text-gray-900 sm:text-4xl">
               {title}
