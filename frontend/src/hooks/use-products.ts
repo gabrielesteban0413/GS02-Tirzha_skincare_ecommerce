@@ -79,17 +79,45 @@ const FEATURED_PRODUCTS: Array<Partial<Product> & { slug: string; name: string; 
 const FALLBACK_PRODUCTS_BY_TYPE: Record<string, Array<Partial<Product> & { slug: string; name: string; description: string; price: number; imageUrl: string }>> = {
   limpiadores: [
     {
-      slug: 'skin1004-limpiador-en-aceite',
-      name: 'SKIN1004 - Limpiador en Aceite Madagascar',
-      description: 'Limpiador en aceite suave con centella.',
+      slug: 'celimax-jabon-facial',
+      name: 'celimax - Jabón Facial',
+      description: 'Jabón facial suave para limpieza profunda y confort diario.',
       price: 90000,
       imageUrl: '/images/home/hero-product.webp',
     },
     {
-      slug: 'tocobo-limpiador-vegan',
-      name: 'TOCOBO - Aceite Limpiador Vegano Calamine',
-      description: 'Aceite limpiador vegano con calamina para equilibrio.',
+      slug: 'skin1004-limpiador-en-aceite-madagascar-centella-light',
+      name: 'SKIN1004 - Limpiador en Aceite Madagascar Centella Light',
+      description: 'Limpiador en aceite suave con centella y confort para la piel.',
+      price: 90000,
+      imageUrl: '/images/home/hero-product.webp',
+    },
+    {
+      slug: 'tocobo-aceite-limpiador-vegano-calamine-pore-control-cleansing-oil',
+      name: 'TOCOBO - Aceite Limpiador Vegano Calamine Pore Control Cleansing Oil',
+      description: 'Aceite limpiador vegano con calamina para una piel más equilibrada.',
       price: 80000,
+      imageUrl: '/images/home/hero-product.webp',
+    },
+    {
+      slug: 'haruharu-wonder-aceite-limpiador-black-rice-moisture-deep-cleansing-oil',
+      name: 'haruharu wonder - Aceite Limpiador Black Rice Moisture Deep Cleansing Oil',
+      description: 'Aceite limpiador con arroz negro para una limpieza profunda y nutritiva.',
+      price: 85000,
+      imageUrl: '/images/home/hero-product.webp',
+    },
+    {
+      slug: 'haruharu-wonder-gel-limpiador-black-rice-moisture-5-5',
+      name: 'haruharu wonder - Gel Limpiador Black Rice Moisture 5.5',
+      description: 'Gel limpiador con arroz negro para una limpieza fresca y equilibrada.',
+      price: 60000,
+      imageUrl: '/images/home/hero-product.webp',
+    },
+    {
+      slug: 'skin1004-espuma-limpiadora-madagascar-centella',
+      name: 'SKIN1004 - Espuma Limpiadora Madagascar Centella',
+      description: 'Espuma limpiadora suave con centella para piel sensible y confortable.',
+      price: 75000,
       imageUrl: '/images/home/hero-product.webp',
     },
   ],
@@ -156,6 +184,8 @@ const FALLBACK_PRODUCTS_BY_TYPE: Record<string, Array<Partial<Product> & { slug:
     },
   ],
   sueros: [
+
+
     {
       slug: 'anua-serum-azelaic',
       name: 'Anua - Sérum Facial Calmante Azelaic Acid',
@@ -184,6 +214,108 @@ const FALLBACK_PRODUCTS_BY_TYPE: Record<string, Array<Partial<Product> & { slug:
       price: 110000,
       imageUrl: '/images/products/serums_medicube-serum-antiedad-pdrn-pink-peptide-serum.webp',
     },
+
+
+      
+    {
+      slug: 'anua-niacinamide-txa-serum',
+      name: 'Anua - Sérum Facial Niacinamide 10% + TXA 4%',
+      description: 'Sérum con niacinamida y ácido tranexámico para uniformar el tono y reducir manchas.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'skin1004-centella-asiatica-100',
+      name: 'SKIN1004 - Ampolla Madagascar Centella Asiatica 100',
+      description: 'Ampolla 100% centella asiática que calma, regenera y fortalece la barrera cutánea.',
+      price: 100000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'skin1004-centella-poremizing-fresh',
+      name: 'SKIN1004 - Ampolla Madagascar Centella Poremizing Fresh Jumbo',
+      description: 'Ampolla que controla el exceso de sebo y minimiza los poros, ideal para pieles mixtas o grasas.',
+      price: 100000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'jumiso-niacinamide-20-serum',
+      name: 'JUMISO - Sérum Niacinamide 20%',
+      description: 'Alta concentración de niacinamida para iluminar, mejorar la textura y reducir manchas profundas.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'medicube-pdrn-pink-peptide',
+      name: 'medicube - Sérum Antiedad PDRN Pink Peptide',
+      description: 'Sérum con PDRN y péptidos que estimula la renovación celular y combate los signos de envejecimiento.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'nineless-b-boost-kojic-acid',
+      name: 'NINELESS - Sérum B-Boost 1% Kojic Acid',
+      description: 'Sérum con ácido kójico que aclara manchas y otorga luminosidad, ideal para pieles con hiperpigmentación.',
+      price: 80000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'celimax-vita-a-retinol-shot',
+      name: 'celimax - Sérum The Vita-A Retinol Shot Tightening',
+      description: 'Retinol de alta eficacia que reafirma la piel, suaviza arrugas y mejora la elasticidad.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'skin1004-retinol-02-boosting-shot',
+      name: 'SKIN1004 - Ampolla Lab in Nature Retinol 0.2 Boosting Shot',
+      description: 'Ampolla con retinol 0.2% que renueva la piel, reduce líneas finas y unifica el tono.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'skin1004-niacinamide-10-boosting-shot',
+      name: 'SKIN1004 - Ampolla Lab in Nature Niacinamide 10 Boosting Shot',
+      description: 'Ampolla con 10% de niacinamida que ilumina, controla el sebo y refina los poros.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'ksecret-seoul-1988-retinal-ginseng',
+      name: 'KSECRET - Sérum SEOUL 1988 Retinal Liposome 2% + Black Ginseng',
+      description: 'Sérum con retinal liposomal y ginseng negro, acción antiedad y revitalizante intensa.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'skin1004-centella-tea-trica-relief',
+      name: 'SKIN1004 - Ampolla Madagascar Centella Tea-Trica Relief',
+      description: 'Ampolla calmante con centella y té verde, ideal para pieles sensibles o con rojeces.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'medicube-txa-niacinamide-15',
+      name: 'medicube - Sérum TXA Niacinamide 15',
+      description: 'Sérum con TXA y niacinamida al 15% que aclara manchas oscuras y previene la hiperpigmentación.',
+      price: 110000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'dr-althea-vitamin-c-boosting',
+      name: 'Dr. Althea - Sérum Vitamin C Boosting',
+      description: 'Sérum con vitamina C pura que ilumina, antioxidante y estimula la producción de colágeno.',
+      price: 120000,
+      imageUrl: '/images/serums/default.webp',
+    },
+    {
+      slug: 'dr-althea-gentle-vitamin-c',
+      name: 'Dr. Althea - Sérum Gentle Vitamin C',
+      description: 'Vitamina C suave y estabilizada, ideal para pieles sensibles, brinda luminosidad sin irritar.',
+      price: 120000,
+      imageUrl: '/images/serums/default.webp',
+    }
+  
   ],
   tonicos: [
     {
