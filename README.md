@@ -1,10 +1,13 @@
 # Tirzha Skincare Ecommerce
 
 
-image= 
 
+
+<img src="frontend/public/images/logo.png" alt="Logo de Tirzha Skincare" width="200" />
 
 Advanced ecommerce platform for skincare products built with modern architecture principles and enterprise-grade technologies.
+
+
 
 ## Table of Contents
 
