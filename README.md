@@ -2,10 +2,9 @@
 
 
 
-
 <div style="display: flex; gap: 20px; justify-content: center;">
-  <img src="frontend/public/images/logo.png" alt="Logo" width="200" />
-  <img src="frontend/public/images/products/suero-facial-vitamina-e-main.webp" alt="Imagen 2" width="200" />
+  <img src="frontend/public/images/recording/home.gif" alt="home" width="200" />
+  <img src="frontend/public/images/recording/home.gif" alt="home" width="200" />width="200" />
   <img src="frontend/public/images/products/contorno-ojos.webp" alt="Imagen 3" width="200" />
 </div>
 
