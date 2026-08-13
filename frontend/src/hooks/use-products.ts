@@ -443,7 +443,7 @@ function buildFallbackProductsByType(type: string): Product[] {
   }));
 }
 
-export function useProductsByType(type: string) {
+export function useProductsByType(type: string, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['products', 'type', type],
     queryFn: async () => {
@@ -458,7 +458,7 @@ export function useProductsByType(type: string) {
       }
     },
     staleTime: 5 * 60 * 1000, // 5 minutos
-    enabled: !!type, // Solo ejecutar si type existe
+    enabled: !!type && (options?.enabled ?? true), // Allow callers to control when to run
   });
 }
 

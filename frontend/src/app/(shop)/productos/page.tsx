@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ProductCard } from "@/components/product/ProductCard";
-import { useProductsByType } from "@/hooks/use-products";
+import { ProductSection } from "@/components/product/ProductSection";
 import { FOOTER_CONTENT } from "@/data/home.content";
 
 const CATALOG_SECTIONS = [
@@ -86,66 +86,11 @@ const CATALOG_SECTIONS = [
 export default function ProductsPage() {
   const [search, setSearch] = useState("");
 
-  const limpiadores = useProductsByType("limpiadores");
-  const esencias = useProductsByType("esencias");
-  const exfoliantes = useProductsByType("exfoliantes");
-  const hidratantes = useProductsByType("hidratantes");
-  const serums = useProductsByType("sueros");
-  const tonicos = useProductsByType("tonicos");
-  const contorno = useProductsByType("contorno-de-ojos");
-  const protectores = useProductsByType("protectores-solares");
-  const maquillaje = useProductsByType("maquillaje");
-  const mascarillas = useProductsByType("mascarillas");
-  const suplementos = useProductsByType("suplementos");
-  const cabello = useProductsByType("tratamiento-para-cabello");
-
-  const queries = {
-    limpiadores,
-    esencias,
-    exfoliantes,
-    hidratantes,
-    sueros: serums,
-    tonicos,
-    "contorno-de-ojos": contorno,
-    "protectores-solares": protectores,
-    maquillaje,
-    mascarillas,
-    suplementos,
-    "tratamiento-para-cabello": cabello,
-  };
-
-  const visibleSections = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
-
-    return CATALOG_SECTIONS.map((section) => {
-      const query = queries[section.key as keyof typeof queries];
-      const allProducts = Array.isArray(query.data) ? query.data : [];
-      const products = allProducts.filter((product: any) => {
-        if (!normalizedSearch) return true;
-
-        const haystack = [
-          product?.name,
-          product?.description,
-          product?.type,
-          product?.solution,
-          product?.slug,
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-        return haystack.includes(normalizedSearch);
-      });
-
-      return {
-        ...section,
-        products: products.slice(0, 4),
-        isLoading: query.isLoading,
-      };
-    });
-  }, [search, queries]);
-
-  const hasVisibleProducts = visibleSections.some((section) => section.products.length > 0);
+  // Defer product fetching to individual ProductSection components to avoid
+  // running many queries on initial render. Each section will fetch when
+  // it enters the viewport or when a search is active.
+  const visibleSections = CATALOG_SECTIONS;
+  const hasVisibleProducts = true;
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(252,229,234,0.9),_transparent_45%),linear-gradient(135deg,_#fffdfd_0%,_#fff7f9_100%)] text-gray-800">
@@ -207,44 +152,7 @@ export default function ProductsPage() {
           </div>
 
           {visibleSections.map((section) => (
-            <div
-              key={section.key}
-              className="mb-8 rounded-[28px] border border-[#f1d9df] bg-white/90 p-6 shadow-[0_18px_45px_-24px_rgba(0,0,0,0.2)] backdrop-blur transition-all duration-500 ease-out md:p-8"
-            >
-              <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <h3 className="text-2xl font-semibold text-gray-900">{section.title}</h3>
-                  <p className="mt-2 text-sm text-gray-500">{section.subtitle}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full border border-[#f3d3da] bg-[#fff8fa] px-4 py-2 text-sm text-gray-600">
-                    {section.isLoading ? "Cargando..." : `${section.products.length} producto${section.products.length === 1 ? "" : "s"}`}
-                  </div>
-                  <Link
-                    href={`/productos/categoria/${section.key}`}
-                    className="rounded-full border border-[#e7c7cf] bg-white px-4 py-2 text-sm font-medium text-[#c05264] transition-all duration-300 hover:bg-[#fdf0f2]"
-                  >
-                    Ver todos
-                  </Link>
-                </div>
-              </div>
-
-              {section.isLoading ? (
-                <div className="rounded-[20px] border border-dashed border-[#ecbec8] bg-[#fff8fa] p-10 text-center text-sm text-gray-500">
-                  Cargando productos de esta categoría...
-                </div>
-              ) : section.products.length > 0 ? (
-                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                  {section.products.map((product: any) => (
-                    <ProductCard key={product.id || product.slug} product={product} />
-                  ))}
-                </div>
-              ) : (
-                <div className="rounded-[20px] border border-dashed border-[#ecbec8] bg-[#fff8fa] p-10 text-center text-sm text-gray-500">
-                  No hay productos para mostrar en esta categoría con el filtro actual.
-                </div>
-              )}
-            </div>
+            <ProductSection key={section.key} section={section} search={search} />
           ))}
 
           {!hasVisibleProducts && search && (

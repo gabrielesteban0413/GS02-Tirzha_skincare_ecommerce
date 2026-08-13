@@ -10,31 +10,59 @@ export function ProductCarousel() {
   const router = useRouter();
   const { data: products = [], isLoading, error } = useFeaturedProducts();
   const trackRef = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState(0);
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const VISIBLE = 3;
+  const [current, setCurrent] = useState(VISIBLE);
+  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const total = products.length;
+  const extended = total > 0 ? [...products.slice(-VISIBLE), ...products, ...products.slice(0, VISIBLE)] : [];
 
   const goTo = useCallback((idx: number) => {
-    const clamped = Math.max(0, Math.min(idx, total - VISIBLE));
-    setCurrent(clamped);
+    const pagesCount = Math.max(1, total - VISIBLE + 1);
+    const clamped = Math.max(0, Math.min(idx, pagesCount - 1));
+    setCurrent(clamped + VISIBLE);
   }, [total]);
 
   useEffect(() => {
+    if (total <= VISIBLE) return;
     autoRef.current = setInterval(() => {
-      setCurrent(prev => (prev + 1 > total - VISIBLE ? 0 : prev + 1));
+      setCurrent(prev => prev + 1);
     }, 3200);
     return () => clearInterval(autoRef.current!);
   }, [total]);
 
+  // compute card width dynamically (responsive) and update on resize
+  useEffect(() => {
+    const calc = () => {
+      const el = trackRef.current;
+      if (!el || !el.children.length) return setCardWidth(CARD_W);
+      const first = el.children[0] as HTMLElement;
+      const style = getComputedStyle(el);
+      const gap = parseFloat(getComputedStyle(el).gap || "16") || 16;
+      const w = Math.round(first.getBoundingClientRect().width + gap);
+      setCardWidth(w || CARD_W);
+    };
+    calc();
+    const ro = new ResizeObserver(calc);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener("resize", calc);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", calc);
+    };
+  }, [extended.length]);
+
   const stopAuto = () => clearInterval(autoRef.current!);
   const startAuto = () => {
+    if (total <= VISIBLE) return;
     autoRef.current = setInterval(() => {
-      setCurrent(prev => (prev + 1 > total - VISIBLE ? 0 : prev + 1));
+      setCurrent(prev => prev + 1);
     }, 3200);
   };
 
   const CARD_W = 226; // 210px card + 16px gap
+
+  const [cardWidth, setCardWidth] = useState(CARD_W);
+  const [isResetting, setIsResetting] = useState(false);
 
   const bgColors = [
     "#fdf0f2", "#e8f4f9", "#f2ecfb",
@@ -78,7 +106,12 @@ export function ProductCarousel() {
           </div>
           <div className="hidden md:flex gap-2">
             <button
-              onClick={() => goTo(current - 1)}
+              onClick={() => {
+                const pages = Math.max(1, total - VISIBLE + 1);
+                const currentPage = ((current - VISIBLE) % pages + pages) % pages;
+                const prev = (currentPage - 1 + pages) % pages;
+                goTo(prev);
+              }}
               className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all"
               aria-label="Anterior"
             >
@@ -87,7 +120,12 @@ export function ProductCarousel() {
               </svg>
             </button>
             <button
-              onClick={() => goTo(current + 1)}
+              onClick={() => {
+                const pages = Math.max(1, total - VISIBLE + 1);
+                const currentPage = ((current - VISIBLE) % pages + pages) % pages;
+                const next = (currentPage + 1) % pages;
+                goTo(next);
+              }}
               className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all"
               aria-label="Siguiente"
             >
@@ -102,12 +140,41 @@ export function ProductCarousel() {
         <div className="overflow-hidden" onMouseEnter={stopAuto} onMouseLeave={startAuto}>
           <div
             ref={trackRef}
-            className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-            style={{ transform: `translateX(-${current * CARD_W}px)` }}
+            className={`flex gap-4 ${isResetting ? "" : "transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"}`}
+            style={{ transform: `translateX(-${current * cardWidth}px)` }}
+            onTransitionEnd={() => {
+              // when we reach the cloned tail area, snap to real start
+              if (current >= total + VISIBLE) {
+                stopAuto();
+                // remove transition class during snap
+                setIsResetting(true);
+                requestAnimationFrame(() => {
+                  setCurrent(VISIBLE);
+                  // force reflow
+                  trackRef.current && trackRef.current.offsetWidth;
+                  requestAnimationFrame(() => {
+                    setIsResetting(false);
+                    startAuto();
+                  });
+                });
+              }
+              if (current < VISIBLE) {
+                stopAuto();
+                setIsResetting(true);
+                requestAnimationFrame(() => {
+                  setCurrent(total + VISIBLE - 1);
+                  trackRef.current && trackRef.current.offsetWidth;
+                  requestAnimationFrame(() => {
+                    setIsResetting(false);
+                    startAuto();
+                  });
+                });
+              }
+            }}
           >
-            {products.map((product: any, i: number) => (
+            {extended.map((product: any, i: number) => (
               <div
-                key={product.id}
+                key={`${product.id ?? 'ext'}-${i}`}
                 onClick={() => router.push(`/productos/${product.slug}`)}
                 className="flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
                 style={{ background: bgColors[i % bgColors.length] }}
@@ -119,7 +186,11 @@ export function ProductCarousel() {
                       src={product.imageUrl}
                       alt={product.name}
                       fill
+                      priority={i < VISIBLE}
+                      loading={i < VISIBLE ? "eager" : "lazy"}
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      placeholder="blur"
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCc+PC9zdmc+"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -175,16 +246,20 @@ export function ProductCarousel() {
 
         {/* Dots */}
         <div className="flex justify-center gap-1.5 mt-6">
-          {Array.from({ length: Math.max(0, total - VISIBLE + 1) }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === current ? "w-5 bg-[#c05264]" : "w-1.5 bg-[#c05264]/20"
-              }`}
-              aria-label={`Ir a ${i + 1}`}
-            />
-          ))}
+          {Array.from({ length: Math.max(1, total - VISIBLE + 1) }).map((_, i) => {
+            const pages = Math.max(1, total - VISIBLE + 1);
+            const activeIndex = ((current - VISIBLE) % pages + pages) % pages;
+            return (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === activeIndex ? "w-5 bg-[#c05264]" : "w-1.5 bg-[#c05264]/20"
+                }`}
+                aria-label={`Ir a ${i + 1}`}
+              />
+            );
+          })}
         </div>
 
       </div>

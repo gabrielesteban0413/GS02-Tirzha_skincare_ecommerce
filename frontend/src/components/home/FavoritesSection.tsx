@@ -3,7 +3,7 @@
 
 import { useRef, useState, useEffect, useCallback, type MouseEvent, type TouchEvent } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+// framer-motion removed from carousel to reduce paint/jank
 import { useRouter } from "next/navigation";
 import { useFeaturedProducts } from "@/hooks/use-products";
 import { useAddToCart } from "@/hooks/use-cart";
@@ -17,22 +17,27 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
   const router = useRouter();
   const { data: products = [], isLoading, error } = useFeaturedProducts();
   const { mutate: addToCart, isPending: isAddingToCart } = useAddToCart();
+  const VISIBLE = 3;
   const trackRef = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(VISIBLE);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchStartX = useRef<number | null>(null);
-  const VISIBLE = 3;
   const featured = products.slice(0, 12);
   const total = featured.length;
+  const extended = total > 0 ? [...featured.slice(-VISIBLE), ...featured, ...featured.slice(0, VISIBLE)] : [];
+
+  
 
   const goTo = useCallback((idx: number) => {
-    const clamped = Math.max(0, Math.min(idx, total - VISIBLE));
-    setCurrent(clamped);
+    const pagesCount = Math.max(1, total - VISIBLE + 1);
+    const clamped = Math.max(0, Math.min(idx, pagesCount - 1));
+    setCurrent(clamped + VISIBLE);
   }, [total]);
 
   useEffect(() => {
+    if (total <= VISIBLE) return;
     autoRef.current = setInterval(() => {
-      setCurrent(prev => (prev + 1 > total - VISIBLE ? 0 : prev + 1));
+      setCurrent(prev => prev + 1);
     }, 3200);
     return () => clearInterval(autoRef.current!);
   }, [total]);
@@ -85,6 +90,32 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
     });
   };
 
+  
+
+  const CARD_W = 226;
+  const [cardWidth, setCardWidth] = useState(CARD_W);
+  const [isResetting, setIsResetting] = useState(false);
+
+  // compute card width dynamically
+  useEffect(() => {
+    const calc = () => {
+      const el = trackRef.current;
+      if (!el || !el.children.length) return setCardWidth(CARD_W);
+      const first = el.children[0] as HTMLElement;
+      const gap = parseFloat(getComputedStyle(el).gap || "16") || 16;
+      const w = Math.round(first.getBoundingClientRect().width + gap);
+      setCardWidth(w || CARD_W);
+    };
+    calc();
+    const ro = new ResizeObserver(calc);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener("resize", calc);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", calc);
+    };
+  }, [extended.length]);
+
   if (isLoading) {
     return (
       <section className="relative isolate py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
@@ -95,14 +126,12 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
     );
   }
 
-  const CARD_W = 226;
-
   return (
     <section className="relative isolate py-16 px-4 md:px-8 lg:px-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <motion.div
+        <div
           className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -117,7 +146,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
           </h2>
           <div className="w-12 md:w-16 h-px bg-[#c05264]/40 mx-auto my-4 md:my-6" />
           <p className="text-gray-500 text-sm md:text-base">{subtitle}</p>
-        </motion.div>
+        </div>
 
         {/* Carousel */}
         <div className="space-y-8">
@@ -125,7 +154,12 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
           {/* Navigation arrows */}
           <div className="hidden md:flex gap-2 justify-end pr-1">
             <button
-              onClick={() => goTo(current - 1)}
+              onClick={() => {
+                const pages = Math.max(1, total - VISIBLE + 1);
+                const currentPage = ((current - VISIBLE) % pages + pages) % pages;
+                const prev = (currentPage - 1 + pages) % pages;
+                goTo(prev);
+              }}
               className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all duration-300"
               aria-label="Anterior"
             >
@@ -134,7 +168,12 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
               </svg>
             </button>
             <button
-              onClick={() => goTo(current + 1)}
+              onClick={() => {
+                const pages = Math.max(1, total - VISIBLE + 1);
+                const currentPage = ((current - VISIBLE) % pages + pages) % pages;
+                const next = (currentPage + 1) % pages;
+                goTo(next);
+              }}
               className="w-10 h-10 rounded-full border border-[#c05264]/30 text-[#c05264] flex items-center justify-center hover:bg-[#c05264] hover:text-white transition-all duration-300"
               aria-label="Siguiente"
             >
@@ -154,12 +193,38 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
             >
               <div
                 ref={trackRef}
-                className="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
-                style={{ transform: `translateX(-${current * CARD_W}px)` }}
+                className={`flex gap-4 ${isResetting ? "" : "transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"}`}
+                style={{ transform: `translateX(-${current * cardWidth}px)` }}
+                onTransitionEnd={() => {
+                  if (current >= total + VISIBLE) {
+                    stopAuto();
+                    setIsResetting(true);
+                    requestAnimationFrame(() => {
+                      setCurrent(VISIBLE);
+                      trackRef.current && trackRef.current.offsetWidth;
+                      requestAnimationFrame(() => {
+                        setIsResetting(false);
+                        startAuto();
+                      });
+                    });
+                  }
+                  if (current < VISIBLE) {
+                    stopAuto();
+                    setIsResetting(true);
+                    requestAnimationFrame(() => {
+                      setCurrent(total + VISIBLE - 1);
+                      trackRef.current && trackRef.current.offsetWidth;
+                      requestAnimationFrame(() => {
+                        setIsResetting(false);
+                        startAuto();
+                      });
+                    });
+                  }
+                }}
               >
-                {featured.map((product, i) => (
-                  <motion.div
-                    key={product.id}
+                {extended.map((product, i) => (
+                  <div
+                    key={`${product.id ?? 'ext'}-${i}`}
                     onClick={() => router.push(`/productos/${product.slug}`)}
                     className="relative flex-shrink-0 w-[210px] rounded-[20px] overflow-hidden cursor-pointer group transition-transform duration-300 hover:-translate-y-1"
                     style={{ background: bgColors[i % bgColors.length] }}
@@ -176,6 +241,8 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                           alt={product.name}
                           fill
                           sizes="210px"
+                          priority={i < VISIBLE}
+                          loading={i < VISIBLE ? "eager" : "lazy"}
                           className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       ) : (
@@ -211,7 +278,7 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
                         </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -228,16 +295,20 @@ export function FavoritesSection({ title, subtitle }: FavoritesSectionProps) {
         {/* Dots */}
         {featured.length > 0 && (
           <div className="flex justify-center gap-2">
-            {Array.from({ length: Math.max(0, total - VISIBLE + 1) }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === current ? "w-5 bg-[#c05264]" : "w-1.5 bg-[#c05264]/20"
-                }`}
-                aria-label={`Ir a ${i + 1}`}
-              />
-            ))}
+            {Array.from({ length: Math.max(1, total - VISIBLE + 1) }).map((_, i) => {
+              const pages = Math.max(1, total - VISIBLE + 1);
+              const activeIndex = ((current - VISIBLE) % pages + pages) % pages;
+              return (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === activeIndex ? "w-5 bg-[#c05264]" : "w-1.5 bg-[#c05264]/20"
+                  }`}
+                  aria-label={`Ir a ${i + 1}`}
+                />
+              );
+            })}
           </div>
         )}
       </div>

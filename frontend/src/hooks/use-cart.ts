@@ -156,8 +156,30 @@ export function useAddToCart() {
         return fallback;
       }
     },
-    onSuccess: (data) => {
-      queryClient.setQueryData(['cart'], data);
+    onMutate: async (data) => {
+      await queryClient.cancelQueries(['cart']);
+      const previous = queryClient.getQueryData<Cart>(['cart']);
+      const optimistic = addOrUpdateLocalItem(previous ?? readLocalCart(), data);
+      queryClient.setQueryData(['cart'], optimistic);
+      writeLocalCart(optimistic);
+      return { previous };
+    },
+    onError: (err, variables, context: any) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['cart'], context.previous);
+        writeLocalCart(context.previous);
+      }
+    },
+    onSettled: async () => {
+      // refetch or sync with server in background
+      try {
+        const cart = await cartApi.get();
+        const normalized = normalizeCart(cart);
+        writeLocalCart(normalized);
+        queryClient.setQueryData(['cart'], normalized);
+      } catch {
+        // keep optimistic / local state
+      }
     },
   });
 }

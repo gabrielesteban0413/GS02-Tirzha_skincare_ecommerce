@@ -82,13 +82,18 @@ export const ProductCard = ({ product }: { product: any }) => {
 
           <Link href={`/productos/${product.slug}`} className="block pr-10">
             <div className="overflow-hidden rounded-[18px] bg-white/70">
-              <Image
-                src={resolveProductImage(product.imageUrl)}
-                alt={product.name}
-                width={600}
-                height={600}
-                className="h-56 w-full object-cover object-center transition duration-700 ease-out group-hover:scale-105"
-              />
+                <Image
+                  src={resolveProductImage(product.imageUrl)}
+                  alt={product.name}
+                  width={600}
+                  height={600}
+                  sizes="(min-width:1280px) 25vw, (min-width:768px) 50vw, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQImWNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+                  className="h-56 w-full object-cover object-center transition duration-700 ease-out group-hover:scale-105"
+                />
             </div>
 
             <div className="mt-4">

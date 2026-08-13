@@ -9,6 +9,12 @@ export const HERO_CONTENT = {
   ctaSecondary: "Conoce Más →",
 };
 
+export const FAVORITES_CONTENT = {
+  title: "Nuestros Favoritos",
+  subtitle: "Los productos más amados por nuestros clientes",
+};
+
+
 export const TREATMENTS_CONTENT = {
   title: "Tratamientos Premium",
   subtitle: "Soluciones especializadas para tu tipo de piel",
@@ -44,10 +50,7 @@ export const TREATMENTS_CONTENT = {
   ],
 };
 
-export const FAVORITES_CONTENT = {
-  title: "Nuestros Favoritos",
-  subtitle: "Los productos más amados por nuestros clientes",
-};
+
 
 export const RECOMMENDED_CONTENT = {
   title: "Te lo Recomendamos",
