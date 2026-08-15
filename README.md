@@ -14,6 +14,7 @@ Tirzha es una plataforma de comercio electrónico especializada en productos de 
 
 Propósito del repositorio
 -------------------------
+
 Este repositorio contiene la implementación completa del proyecto en formato monorepo: backend (API), frontend (Next.js) y paquetes compartidos. Está pensado para despliegues empresariales, integración CI/CD y escalado según demanda.
 
 Índice
