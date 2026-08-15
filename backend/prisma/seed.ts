@@ -137,6 +137,14 @@ async function main() {
         solution: 'poros-y-brillo',
         stock: 16,
       },
+
+
+
+
+
+
+
+
       {
         name: 'Medicube - Mascarilla Envolvente Nocturna Collagen Night Wrapping Mask',
         slug: 'medicube-mascarilla-envolvente-nocturna-collagen-night-wrapping-mask',

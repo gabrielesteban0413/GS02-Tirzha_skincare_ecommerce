@@ -1,614 +1,189 @@
-# Tirzha Skincare Ecommerce
-
+Tirzha — Plataforma Ecommerce de Skincare
+=========================================
 
 
 <div style="display: flex; gap: 20px; justify-content: center;">
   <img src="frontend/public/images/recording/home.gif" alt="home" width="200" />
   <img src="frontend/public/images/recording/home.gif" alt="home" width="200" />width="200" />
-  <img src="frontend/public/images/products/contorno-ojos.webp" alt="Imagen 3" width="200" />
+  <img src="frontend/public/images/recording/home.gif" alt="Imagen 3" width="200" />
 </div>
 
-Advanced ecommerce platform for skincare products built with modern architecture principles and enterprise-grade technologies.
+Resumen ejecutivo
+------------------
+Tirzha es una plataforma de comercio electrónico especializada en productos de cuidado de la piel. Diseñada y desarrollada con principios de arquitectura limpia y prácticas de ingeniería de software de nivel empresarial, Tirzha ofrece un catálogo avanzado de productos, gestión de pedidos y una experiencia de usuario optimizada para dispositivos móviles y escritorio.
 
+Propósito del repositorio
+-------------------------
+Este repositorio contiene la implementación completa del proyecto en formato monorepo: backend (API), frontend (Next.js) y paquetes compartidos. Está pensado para despliegues empresariales, integración CI/CD y escalado según demanda.
 
+Índice
+------
+- Resumen ejecutivo
+- Estado del proyecto
+- Características clave
+- Arquitectura y organización del código
+- Tecnologías principales
+- Requisitos e instalación rápida
+- Desarrollo y pruebas
+- Despliegue y producción
+- Contribución y buenas prácticas
+- Soporte y contacto
 
-## Table of Contents
+Estado del proyecto
+-------------------
+- Estado: Producción / Preparado para despliegue (configurable)
+- Última actualización: Junio 2026
+- Versión: 1.0.0
 
-- [Overview](#overview)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Development](#development)
-- [Production Build](#production-build)
-- [Deployment](#deployment)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
+Características clave
+--------------------
+- Catálogo de productos con filtros avanzados (por tipo, categoría y solución)
+- Carrito de compra con actualizaciones en tiempo real
+- Autenticación y gestión de perfiles de usuario
+- Flujo de pedidos y administración de órdenes
+- Plantillas de rutinas de cuidado de la piel
+- Arquitectura modular y testable (Clean Architecture)
 
----
+Arquitectura y estructura del repositorio
+---------------------------------------
+El proyecto sigue los principios de Clean Architecture con capas bien definidas:
 
-## Overview
+- Domain: Entidades, objetos de valor y reglas de negocio.
+- Application: Casos de uso, DTOs y orquestación de lógica.
+- Infrastructure: Persistencia (Prisma), clientes externos (pagos, email), DI y cache.
+- Presentation: API REST (Express) y controladores; Frontend (Next.js App Router).
 
-Tirzha is a full-stack ecommerce application designed for skincare product sales. The platform implements Clean Architecture principles to ensure maintainability, scalability, and separation of concerns across all layers.
-
-**Key Features:**
-- Product catalog with advanced filtering (by type, category, solution)
-- Shopping cart management with real-time updates
-- User authentication and profiles
-- Order management system
-- Skincare routine templates
-- Responsive design for mobile and desktop
-
----
-
-## Technology Stack
-
-### Backend
-- **Runtime:** Node.js
-- **Language:** TypeScript 5.8.2
-- **Framework:** Express.js
-- **Database:** PostgreSQL with Prisma 5.22.0 ORM
-- **Dependency Injection:** tsyringe 4.10.0
-- **Validation:** class-validator, class-transformer
-- **Package Manager:** pnpm 11.5.1
-
-### Frontend
-- **Framework:** Next.js 14 (App Router)
-- **UI Library:** React 18.2.0
-- **Language:** TypeScript 6.0.3
-- **State Management:** 
-  - React Query 5.101.0 (server state)
-  - Zustand 5.0.14 (client state)
-- **HTTP Client:** axios 1.17.0
-- **Styling:** Tailwind CSS
-- **Package Manager:** pnpm 11.5.1
-
-### Monorepo
-- **Workspace:** pnpm workspaces
-- **Build System:** Turbo
-- **Shared Packages:**
-  - `@skincare/api-types` - API interfaces
-  - `@skincare/config` - Shared configurations
-  - `@skincare/core` - Domain logic
-  - `@skincare/shared-utils` - Utility functions
-  - `@skincare/ui-kit` - Reusable components
-
----
-
-## Architecture
-
-### Clean Architecture Implementation
-
-The application follows Clean Architecture principles with strict layering:
-
-```
-Domain Layer
-    ├── Entities (User, Product, Order, Cart, Routine)
-    ├── Value Objects (Money, Email, Stock, Address)
-    ├── Ports (Repository interfaces)
-    └── Errors (Domain-specific exceptions)
-         ↓
-Application Layer
-    ├── Use Cases (Business logic orchestration)
-    ├── DTOs (Data validation)
-    └── Service interfaces
-         ↓
-Infrastructure Layer
-    ├── Database (Prisma models & mappers)
-    ├── External Services (Payment, Email)
-    ├── Dependency Injection
-    └── Cache management
-         ↓
-Presentation Layer
-    ├── Controllers (HTTP request handling)
-    ├── Routes
-    └── Middleware
-```
-
-### Frontend Architecture
-
-```
-Frontend Layer Structure
-    ├── App (Next.js routing)
-    ├── Components (Reusable UI components)
-    ├── Hooks (React Query + Zustand)
-    ├── Infrastructure
-    │   ├── API clients (axios instances)
-    │   └── React Query setup
-    ├── Stores (Zustand state)
-    └── Data (Constants & fixtures)
-```
-
-### State Management Strategy
-
-- **Server State (React Query):** API data, products, orders, user data
-- **Client State (Zustand):** Authentication, UI toggles (modals, menus)
-- **Persistence:** LocalStorage for auth tokens and UI preferences
-
----
-
-## Project Structure
+Estructura principal (resumen)
 
 ```
 .
-├── backend/
-│   ├── src/
-│   │   ├── domain/              # Business rules & entities
-│   │   │   ├── entities/
-│   │   │   ├── value-objects/
-│   │   │   ├── ports/           # Repository interfaces
-│   │   │   └── errors/          # Domain exceptions
-│   │   ├── application/         # Use cases & DTOs
-│   │   │   ├── product/
-│   │   │   ├── auth/
-│   │   │   ├── cart/
-│   │   │   ├── order/
-│   │   │   └── routine/
-│   │   ├── infrastructure/      # Database, DI, external services
-│   │   │   ├── database/
-│   │   │   ├── di/              # Dependency container
-│   │   │   ├── cache/
-│   │   │   ├── email/
-│   │   │   └── payment/
-│   │   └── presentation/        # HTTP layer
-│   │       ├── controllers/
-│   │       ├── middlewares/
-│   │       ├── routes/
-│   │       └── server.ts
-│   ├── prisma/
-│   │   ├── schema.prisma
-│   │   ├── seed.ts
-│   │   └── migrations/
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── app/                 # Next.js routes (App Router)
-│   │   │   ├── (auth)/
-│   │   │   ├── (shop)/
-│   │   │   ├── (info)/
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
-│   │   ├── components/          # React components
-│   │   │   ├── product/
-│   │   │   ├── cart/
-│   │   │   ├── layout/
-│   │   │   └── ui/
-│   │   ├── hooks/               # React Query & Zustand hooks
-│   │   ├── infrastructure/      # API clients
-│   │   ├── stores/              # Zustand stores
-│   │   ├── data/                # Constants & fixtures
-│   │   └── styles/
-│   ├── public/
-│   └── package.json
-│
-├── packages/
-│   ├── api-types/               # Shared TypeScript types
-│   ├── config/                  # ESLint, Jest, tsconfig
-│   ├── core/                    # Shared domain logic
-│   ├── shared-utils/            # Utility functions
-│   └── ui-kit/                  # Reusable components
-│
-├── docker/
-│   ├── Dockerfile.api
-│   ├── Dockerfile.web
-│   └── docker-compose.yml
-│
-├── pnpm-workspace.yaml
-├── turbo.json
-├── tsconfig.json
-└── README.md
+├── backend/        # API, Prisma, migraciones y servicios
+├── frontend/       # Next.js (App Router), componentes y assets
+├── packages/       # Paquetes compartidos (types, config, core, ui-kit)
+└── docker/         # Contenedores y compose para despliegue local
 ```
 
----
+Tecnologías principales
+-----------------------
 
-## Getting Started
+- Backend: Node.js, TypeScript, Express, Prisma, PostgreSQL
+- Frontend: Next.js 14 (App Router), React 18, Tailwind CSS
+- Estado: React Query (server), Zustand (cliente)
+- Monorepo: pnpm workspaces, Turbo
 
-### Prerequisites
+Requisitos previos
+------------------
 
-- Node.js 18.x or later
-- pnpm 11.x or later
+- Node.js 18+ (recomendado)
+- pnpm 7+ (o la versión especificada por el equipo)
 - PostgreSQL 14+
-- Git
+- Docker (opcional para despliegue local)
 
-### Installation
+Instalación rápida (desarrollo)
+-------------------------------
+
+1. Clonar el repositorio
 
 ```bash
-# Clone repository
-git clone <repository-url>
+git clone <repositorio>
 cd GS02-Tirzha_skincare_ecommerce
+```
 
-# Install dependencies
+2. Instalar dependencias (monorepo)
+
+```bash
 pnpm install
+```
 
-# Setup environment variables
+3. Configurar variables de entorno
+
+```bash
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env.local
-
-# Configure DATABASE_URL in backend/.env
-# DATABASE_URL=postgresql://user:password@localhost:5432/tirzha_db
+# Ajustar DATABASE_URL en backend/.env
 ```
 
-### Environment Variables
-
-**Backend** (`backend/.env`):
-```env
-DATABASE_URL=postgresql://user:password@localhost:5432/tirzha_db
-NODE_ENV=development
-PORT=3001
-CORS_ORIGIN=http://localhost:3000,https://tirzha-skincare.vercel.app
-```
-
-**Frontend** (`frontend/.env.local`):
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
-```
-
----
-
-## Development
-
-### Start Development Servers
+4. Ejecutar en desarrollo (terminales separadas)
 
 ```bash
-# Terminal 1: Backend
+# Backend
 cd backend
 pnpm dev
 
-# Terminal 2: Frontend
+# Frontend
 cd frontend
 pnpm dev
 ```
 
-Backend runs on `http://localhost:3001`  
-Frontend runs on `http://localhost:3000`
+Comandos útiles
+---------------
 
-### Database Setup
+- `pnpm dev` — iniciar servidor de desarrollo (por paquete)
+- `pnpm build` — compilar los paquetes
+- `pnpm lint` — ejecutar linters
+- `pnpm test` — ejecutar pruebas
+
+Base de datos
+-------------
+
+Aplicar migraciones y seed:
 
 ```bash
-# Apply migrations
 cd backend
 pnpm exec prisma migrate dev
-
-# Seed database with initial data
 pnpm exec prisma db seed
 ```
 
-### Available Commands
-
-**Backend:**
-```bash
-pnpm dev         # Start development server
-pnpm build       # Compile TypeScript
-pnpm start       # Run production build
-pnpm test        # Run tests
-pnpm lint        # Run ESLint
-```
-
-**Frontend:**
-```bash
-pnpm dev         # Start development server
-pnpm build       # Build for production
-pnpm start       # Run production server
-pnpm lint        # Run ESLint
-```
+Despliegue y recomendaciones
+----------------------------
 
-**Root (Monorepo):**
-```bash
-pnpm install     # Install all dependencies
-pnpm build       # Build all packages
-pnpm dev         # Start all dev servers
-pnpm lint        # Lint all packages
-```
+Recomendado: desplegar frontend en Vercel (optimizado para Next.js) y backend en una plataforma de Node.js gestionada (Railway, Render, AWS ECS, etc.).
 
----
+Opciones comunes:
 
-## Production Build
+- Vercel (frontend): configurar `frontend` como directorio raíz y variables de entorno.
+- Railway / Render (backend): exponer `DATABASE_URL`, `NODE_ENV=production`, `PORT` y `JWT_SECRET`.
+- Docker: `docker-compose` incluido para entornos replicables.
 
-### Build Process
+Buenas prácticas para producción
+--------------------------------
+- Gestionar secretos mediante un vault o variables de entorno en la plataforma de despliegue.
+- Ejecutar migraciones como paso de despliegue controlado.
+- Monitorización y alertas (logs, Sentry, métricas).
+- Políticas de backup para la base de datos.
 
-```bash
-# Build entire monorepo
-pnpm build
+Contribución
+------------
 
-# Verify builds
-ls backend/dist
-ls frontend/.next
-```
-
-### Build Output
-
-- **Backend:** `backend/dist/` - Compiled JavaScript
-- **Frontend:** `frontend/.next/` - Next.js optimized build
+Se agradecen contribuciones siguiendo el flujo estándar:
 
-### Environment for Production
+1. Abrir un issue describiendo el cambio o la mejora.
+2. Crear una rama basada en `main`: `feature/<nombre>`.
+3. Añadir tests y documentación cuando aplique.
+4. Crear un Pull Request con descripción clara y pasos para reproducir.
 
-**Backend** (`backend/.env`):
-```env
-DATABASE_URL=postgresql://user:password@your-host:5432/tirzha_db
-NODE_ENV=production
-PORT=3001
-JWT_SECRET=generate-secure-random-string
-```
-
-**Frontend** (`frontend/.env.production`):
-```env
-NEXT_PUBLIC_API_URL=https://api.your-domain.com
-```
-
----
-
-## Deployment
-
-### Option 1: Deploy to Vercel (Recommended for Next.js)
-
-Vercel is optimized for Next.js deployments and provides the best experience.
-
-**Steps:**
-
-1. **Connect Repository:**
-   ```bash
-   # Push code to GitHub
-   git push origin main
-   ```
-
-2. **Import Project to Vercel:**
-   - Visit https://vercel.com/new
-   - Select your GitHub repository
-   - Select `frontend` as root directory
-   - Configure environment variables
-
-3. **Configure Build Settings:**
-   - Build Command: `cd ../.. && pnpm build`
-   - Output Directory: `.next`
-   - Install Command: `pnpm install`
-
-4. **Deploy Backend:**
-   - For API, use Railway, Render, or any Node.js hosting
-   - Configure `NEXT_PUBLIC_API_URL` to point to your backend
-
-**Vercel Configuration** (`frontend/vercel.json`):
-```json
-{
-  "buildCommand": "cd ../.. && pnpm install && pnpm build",
-  "outputDirectory": ".next",
-  "env": {
-    "NEXT_PUBLIC_API_URL": "@next_public_api_url"
-  }
-}
-```
+Guías de estilo
+--------------
 
-### Option 2: Deploy to Netlify (Requires Configuration)
-
-Netlify needs special configuration for Next.js due to SSR and dynamic routes.
+- TypeScript: reglas del `eslint-config` compartido en `packages/config`.
+- Commits: mensajes claros y atómicos. Prefijo sugerido: `feat:`, `fix:`, `chore:`.
 
-**Alternative: Use Netlify Functions + Static Export (NOT Recommended):**
+Soporte y contacto
+-------------------
 
-This would require removing SSR capabilities, which is not ideal.
+Para soporte interno o preguntas relacionadas con despliegue y arquitectura, contactar al equipo de desarrollo responsable o abrir un issue en este repositorio.
 
-**Better: Configure as Full-Stack with Node Runtime:**
-
-1. **Create `netlify.toml`:**
-
-```toml
-[build]
-  command = "cd ../.. && pnpm install && pnpm build"
-  functions = "backend/dist"
-  publish = "frontend/.next"
-
-[dev]
-  command = "pnpm dev"
-  port = 3000
-
-[context.production]
-  environment = { NODE_ENV = "production" }
-
-# Redirect all unmatched routes to index for client-side routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
-**Known Issue with Netlify:**
-Netlify historically has issues with Next.js SSR. The 404 error occurs because:
-- Dynamic routes need server-side rendering
-- Netlify's default static hosting can't handle SSR
-- Solution: Use Vercel instead, or deploy backend and frontend separately
-
-### Option 3: Deploy Frontend to Netlify + Backend Separately
+Licencia
+--------
 
-**Frontend on Netlify (as static build):**
+Propietario: Tirzha — Todos los derechos reservados.
 
-```toml
-# netlify.toml
-[build]
-  command = "pnpm build"
-  publish = "frontend/.next/static"
+Registro de cambios (changelog)
+-------------------------------
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
+Version 1.0.0 — Junio 2026
+- Versión inicial pública del proyecto.
 
-**Backend on Railway/Render:**
-- Deploy the backend from the `backend/` folder
-- Use Railway (https://railway.app) or Render (https://render.com)
-- Set `DATABASE_URL`, `NODE_ENV=production`, `PORT=3001`, and `CORS_ORIGIN=https://tirzha-skincare.vercel.app`
-- Run Prisma migrations and the initial seed once after the first deploy
+—
 
-### Option 4: Docker Deployment
-
-**Build Docker Images:**
-```bash
-cd docker
-docker-compose build
-docker-compose up
-```
-
-**Deploy to Cloud:**
-- Google Cloud Run
-- AWS ECS
-- Azure Container Instances
-- DigitalOcean App Platform
-
----
-
-## API Documentation
-
-### Base URL
-```
-Production: https://api.tirzha.com
-Development: http://localhost:3001/api
-```
-
-### Product Endpoints
-
-**Get products by type:**
-```
-GET /api/products/type/:type
-```
-
-**Get products by solution:**
-```
-GET /api/products/solution/:solution
-```
-
-**Get product by slug:**
-```
-GET /api/products/:slug
-```
-
-### Response Format
-
-**Success Response:**
-```json
-{
-  "data": { /* entity data */ },
-  "code": "SUCCESS"
-}
-```
-
-**Error Response:**
-```json
-{
-  "code": "PRODUCT_NOT_FOUND",
-  "message": "Product not found",
-  "statusCode": 404
-}
-```
-
----
-
-## Architecture Decisions
-
-### Why Clean Architecture?
-
-- **Testability:** Each layer can be tested independently
-- **Maintainability:** Clear separation of concerns
-- **Scalability:** Easy to add new features without affecting existing code
-- **Flexibility:** Easy to swap implementations (e.g., database, payment provider)
-
-### Why React Query + Zustand?
-
-- **React Query:** Eliminates complex server state management
-- **Zustand:** Lightweight and performant for client state
-- **Separation:** Clear distinction between server and client state
-
-### Why Monorepo?
-
-- **Code Sharing:** Common types and utilities across packages
-- **Consistency:** Unified dependency versions
-- **Easier Refactoring:** Change shared code in one place
-- **Better Developer Experience:** Single workspace setup
-
----
-
-## Performance Considerations
-
-- **Query Caching:** React Query caches responses for 5 minutes
-- **Lazy Loading:** Components load only when needed
-- **Image Optimization:** Next.js automatic image optimization
-- **Database Indexing:** Indexes on commonly filtered fields
-- **API Rate Limiting:** Prevent abuse and ensure stability
-
----
-
-## Security
-
-- **Password Hashing:** bcrypt for secure password storage
-- **JWT Tokens:** Stateless authentication
-- **CORS:** Configured for frontend domain only
-- **Input Validation:** DTOs with class-validator
-- **SQL Injection Prevention:** Prisma parameterized queries
-- **HTTPS Only:** Required for production
-
----
-
-## Troubleshooting
-
-### Netlify 404 Error
-
-**Problem:** Pages return 404 after deployment to Netlify
-
-**Root Cause:** Next.js requires server-side rendering for dynamic routes; Netlify's default hosting is static-only
-
-**Solutions (in order of recommendation):**
-
-1. **Use Vercel** (Best) - Built for Next.js
-2. **Deploy separately:**
-   - Frontend: Netlify (static export)
-   - Backend: Railway, Render, or Heroku
-3. **Use Docker** - Deploy both frontend and backend as containers
-
-### Database Connection Issues
-
-```bash
-# Verify DATABASE_URL format
-postgresql://user:password@host:port/database
-
-# Test connection
-cd backend
-pnpm exec prisma db execute --stdin < /dev/null
-```
-
-### Build Failures
-
-```bash
-# Clear cache and rebuild
-pnpm install
-pnpm build --force
-
-# Check Node version
-node --version  # Should be 18+
-```
-
----
-
-## Contributing
-
-1. Create feature branch: `git checkout -b feature/feature-name`
-2. Commit changes: `git commit -m "Add feature description"`
-3. Push branch: `git push origin feature/feature-name`
-4. Create Pull Request with description
-
----
-
-## License
-
-Proprietary - All rights reserved
-
----
-
-## Support
-
-For issues or questions:
-- Check existing GitHub issues
-- Create new issue with detailed description
-- Include error logs and reproduction steps
-
----
-
-**Last Updated:** June 2026  
-**Version:** 1.0.0
+Si quieres, puedo: 1) añadir una versión en inglés, 2) generar una sección de arquitectura visual (diagramas), o 3) adaptar el README para un `CONTRIBUTING.md` separado. ¿Cuál prefieres?
