@@ -19,6 +19,7 @@ Este repositorio contiene la implementación completa del proyecto en formato mo
 
 Índice
 ------
+
 - Resumen ejecutivo
 - Estado del proyecto
 - Características clave
